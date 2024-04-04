@@ -118,4 +118,4 @@ class Assign_class_teacher extends Model
         return ClassSubjectTimetable::getRecordClassSubject($class_id, $subject_id, $getWeek->id);
 
     }
-}
+}    

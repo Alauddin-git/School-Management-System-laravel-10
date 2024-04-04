@@ -1,12 +1,12 @@
-@extends('layouts.app')
-@section('style')
+
+<?php $__env->startSection('style'); ?>
     <style type="text/css">
         .fc-daygrid-event {
             white-space: normal;
         }
     </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -28,22 +28,22 @@
             </div>
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-    <script src="{{ url('admin_asset/dist/fullcalendar/index.global.js') }}"></script>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(url('admin_asset/dist/fullcalendar/index.global.js')); ?>"></script>
 
     <script type="text/javascript">
         var events = [];
         var eventId = 1;
-        @foreach ($getClassTimetable as $value)
+        <?php $__currentLoopData = $getClassTimetable; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 events.push({
-                    title: '{{ $value->class_name }}-{{ $value->subject_name }}',
-                    daysOfWeek: [{{ $value->fullcalendar_day }}],
-                    startTime: '{{ $value->start_time }}',
-                    endTime: '{{ $value->end_time }}',
+                    title: '<?php echo e($value->class_name); ?>-<?php echo e($value->subject_name); ?>',
+                    daysOfWeek: [<?php echo e($value->fullcalendar_day); ?>],
+                    startTime: '<?php echo e($value->start_time); ?>',
+                    endTime: '<?php echo e($value->end_time); ?>',
                 });
-            @endforeach 
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
@@ -60,4 +60,6 @@
 
         calendar.render();
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sms\resources\views/teacher/my_calendar.blade.php ENDPATH**/ ?>

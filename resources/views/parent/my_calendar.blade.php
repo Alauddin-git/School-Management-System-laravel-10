@@ -31,7 +31,7 @@
 @endsection
 
 @section('script')
-    <script src="{{ url('admin/dist/fullcalendar/index.global.js') }}"></script>
+    <script src="{{ url('admin_asset/dist/fullcalendar/index.global.js') }}"></script>
 
     <script type="text/javascript">
         var events = [];

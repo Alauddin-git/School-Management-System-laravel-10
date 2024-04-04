@@ -9,11 +9,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('admin_asset') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
+                <img src="<?php echo e(asset('admin_asset')); ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="#" class="d-block"><?php echo e(Auth::user()->name); ?></a>
             </div>
         </div>
 
@@ -21,10 +21,10 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                @if (Auth::user()->user_type == 1)
+                <?php if(Auth::user()->user_type == 1): ?>
                     <li class="nav-item">
-                        <a href="{{ route('admin.dashboard') }}"
-                            class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                        <a href="<?php echo e(route('admin.dashboard')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'dashboard'): ?> active <?php endif; ?>">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -32,8 +32,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.admin.list') }}"
-                            class="nav-link @if (Request::segment(2) == 'admin') active @endif">
+                        <a href="<?php echo e(route('admin.admin.list')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'admin'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Admin
@@ -41,8 +41,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.teacher.list') }}"
-                            class="nav-link @if (Request::segment(2) == 'teacher') active @endif">
+                        <a href="<?php echo e(route('admin.teacher.list')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'teacher'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Teacher
@@ -50,8 +50,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.student.list') }}"
-                            class="nav-link @if (Request::segment(2) == 'student') active @endif">
+                        <a href="<?php echo e(route('admin.student.list')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'student'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Student
@@ -59,18 +59,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.parent.list') }}"
-                            class="nav-link @if (Request::segment(2) == 'parent') active @endif">
+                        <a href="<?php echo e(route('admin.parent.list')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'parent'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Parent
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item {{ in_array(Request::segment(2), ['class', 'subject', 'assign-subject',
-                     'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ in_array(Request::segment(2), ['class', 'subject', 
-                        'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : '' }}">
+                    <li class="nav-item <?php echo e(in_array(Request::segment(2), ['class', 'subject', 'assign-subject',
+                     'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
+                        <a href="#" class="nav-link <?php echo e(in_array(Request::segment(2), ['class', 'subject', 
+                        'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
                           <i class="nav-icon fas fa-table"></i>
                           <p>
                             Academics
@@ -79,41 +79,41 @@
                         </a>
                         <ul class="nav nav-treeview">
                           <li class="nav-item">
-                            <a href="{{ route('admin.class.list') }}" class="nav-link @if (Request::segment(2) == 'class') active @endif">
+                            <a href="<?php echo e(route('admin.class.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'class'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Class</p>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="{{ route('admin.subject.list') }}" class="nav-link @if (Request::segment(2) == 'subject') active @endif">
+                            <a href="<?php echo e(route('admin.subject.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'subject'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Subject</p>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="{{ route('admin.assign-subject.list') }}" class="nav-link @if (Request::segment(2) == 'assign-subject') active @endif">
+                            <a href="<?php echo e(route('admin.assign-subject.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'assign-subject'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Assign Subject</p>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="{{ route('admin.class_timetable.list') }}" class="nav-link @if (Request::segment(2) == 'class_timetable') active @endif">
+                            <a href="<?php echo e(route('admin.class_timetable.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'class_timetable'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Class Timetable</p>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="{{ route('admin.assign_class_teacher.list') }}" class="nav-link @if (Request::segment(2) == 'assign_class_teacher') active @endif">
+                            <a href="<?php echo e(route('admin.assign_class_teacher.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'assign_class_teacher'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Assign Class Teacher</p>
                             </a>
                           </li>
                         </ul>
                       </li>
-                    <li class="nav-item {{ in_array(Request::segment(3), ['exam', 'exam_schedule', 'assign-subject',
-                     'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ in_array(Request::segment(3), ['exam', 'exam_schedule', 
-                        'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : '' }}">
+                    <li class="nav-item <?php echo e(in_array(Request::segment(3), ['exam', 'exam_schedule', 'assign-subject',
+                     'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
+                        <a href="#" class="nav-link <?php echo e(in_array(Request::segment(3), ['exam', 'exam_schedule', 
+                        'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
                           <i class="nav-icon fas fa-table"></i>
                           <p>
                             Examinations
@@ -122,13 +122,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                           <li class="nav-item">
-                            <a href="{{ route('admin.examinations.exam.list') }}" class="nav-link @if (Request::segment(3) == 'exam') active @endif">
+                            <a href="<?php echo e(route('admin.examinations.exam.list')); ?>" class="nav-link <?php if(Request::segment(3) == 'exam'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Exam</p>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="{{ route('admin.examinations.exam_schedule') }}" class="nav-link @if (Request::segment(3) == 'exam_schedule') active @endif">
+                            <a href="<?php echo e(route('admin.examinations.exam_schedule')); ?>" class="nav-link <?php if(Request::segment(3) == 'exam_schedule'): ?> active <?php endif; ?>">
                               <i class="far fa-circle nav-icon"></i>
                               <p>Exam Schedule</p>
                             </a>
@@ -136,8 +136,8 @@
                         </ul>
                       </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.account.edit') }}"
-                            class="nav-link @if (Request::segment(2) == 'account') active @endif">
+                        <a href="<?php echo e(route('admin.account.edit')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'account'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Account
@@ -145,18 +145,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.change_password.show') }}"
-                            class="nav-link @if (Request::segment(2) == 'change_password') active @endif">
+                        <a href="<?php echo e(route('admin.change_password.show')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Change Password
                             </p>
                         </a>
                     </li>
-                @elseif(Auth::user()->user_type == 2)
+                <?php elseif(Auth::user()->user_type == 2): ?>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.dashboard') }}"
-                            class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                        <a href="<?php echo e(route('teacher.dashboard')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'dashboard'): ?> active <?php endif; ?>">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -164,8 +164,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.my_student') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_student') active @endif">
+                        <a href="<?php echo e(route('teacher.my_student')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_student'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Student
@@ -173,8 +173,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.my_class_subject') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_class_subject') active @endif">
+                        <a href="<?php echo e(route('teacher.my_class_subject')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_class_subject'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Class & Subject
@@ -182,8 +182,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.my_exam_timetable') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_exam_timetable') active @endif">
+                        <a href="<?php echo e(route('teacher.my_exam_timetable')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_exam_timetable'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Exam Timetable
@@ -191,8 +191,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.change_password.show') }}"
-                            class="nav-link @if (Request::segment(2) == 'change_password') active @endif">
+                        <a href="<?php echo e(route('teacher.change_password.show')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Change Password
@@ -200,8 +200,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.my_calendar') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_calendar') active @endif">
+                        <a href="<?php echo e(route('teacher.my_calendar')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_calendar'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Calendar
@@ -209,18 +209,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('teacher.account.edit') }}"
-                            class="nav-link @if (Request::segment(2) == 'account') active @endif">
+                        <a href="<?php echo e(route('teacher.account.edit')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'account'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Account
                             </p>
                         </a>
                     </li>
-                @elseif(Auth::user()->user_type == 3)
+                <?php elseif(Auth::user()->user_type == 3): ?>
                     <li class="nav-item">
-                        <a href="{{ route('student.dashboard') }}"
-                            class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                        <a href="<?php echo e(route('student.dashboard')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'dashboard'): ?> active <?php endif; ?>">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -228,8 +228,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('student.account.edit') }}"
-                            class="nav-link @if (Request::segment(2) == 'account') active @endif">
+                        <a href="<?php echo e(route('student.account.edit')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'account'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Account
@@ -237,8 +237,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('student.my_calendar') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_calendar') active @endif">
+                        <a href="<?php echo e(route('student.my_calendar')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_calendar'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Calendar
@@ -246,8 +246,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('student.my_subject') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_subject') active @endif">
+                        <a href="<?php echo e(route('student.my_subject')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_subject'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Subject
@@ -255,8 +255,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('student.my_timetable') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_timetable') active @endif">
+                        <a href="<?php echo e(route('student.my_timetable')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_timetable'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Timetable
@@ -264,8 +264,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('student.my_exam_timetable') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_exam_timetable') active @endif">
+                        <a href="<?php echo e(route('student.my_exam_timetable')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_exam_timetable'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Exam Timetable
@@ -273,18 +273,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('student.change_password.show') }}"
-                            class="nav-link @if (Request::segment(2) == 'change_password') active @endif">
+                        <a href="<?php echo e(route('student.change_password.show')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Change Password
                             </p>
                         </a>
                     </li>
-                @elseif(Auth::user()->user_type == 4)
+                <?php elseif(Auth::user()->user_type == 4): ?>
                     <li class="nav-item">
-                        <a href="{{ route('parent.dashboard') }}"
-                            class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                        <a href="<?php echo e(route('parent.dashboard')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'dashboard'): ?> active <?php endif; ?>">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -292,8 +292,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('parent.my_student') }}"
-                            class="nav-link @if (Request::segment(2) == 'my_student') active @endif">
+                        <a href="<?php echo e(route('parent.my_student')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_student'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Student
@@ -301,8 +301,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('parent.account.edit') }}"
-                            class="nav-link @if (Request::segment(2) == 'account') active @endif">
+                        <a href="<?php echo e(route('parent.account.edit')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'account'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Account
@@ -310,17 +310,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('parent.change_password.show') }}"
-                            class="nav-link @if (Request::segment(2) == 'change_password') active @endif">
+                        <a href="<?php echo e(route('parent.change_password.show')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Change Password
                             </p>
                         </a>
                     </li>
-                @endif
+                <?php endif; ?>
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link">
+                    <a href="<?php echo e(route('logout')); ?>" class="nav-link">
                         <i class="nav-icon far fa-user"></i>
                         <p>
                             Logout
@@ -333,3 +333,4 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+<?php /**PATH C:\laragon\www\sms\resources\views/layouts/asidebar.blade.php ENDPATH**/ ?>
