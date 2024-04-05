@@ -154,7 +154,7 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/my_exam_timetable', [ExaminationController::class, 'MyExamTimetableTeacher'])->name('teacher.my_exam_timetable');
 
     // calendar
-    Route::get('teacher/my_student/calendar', [CalendarController::class, 'myStudentCalendarTeacher'])->name('teacher.my_calendar');
+    Route::get('teacher/mystudent/calendar', [CalendarController::class, 'myStudentCalendarTeacher'])->name('teacher.my_calendar');
 
     // account
     Route::get('teacher/account/edit', [UserController::class, 'myAccount'])->name('teacher.account.edit');

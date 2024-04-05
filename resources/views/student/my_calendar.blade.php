@@ -55,7 +55,7 @@
                     start: '{{ $exam['exam_date'] }}',
                     end: '{{ $exam['exam_date'] }}',
                     color: 'silver',
-                    url: 'http://127.0.0.1:8000/student/my_exam_timetable',
+                    url: '{{ url('student/my_exam_timetable') }}',
                 });
             @endforeach
         @endforeach

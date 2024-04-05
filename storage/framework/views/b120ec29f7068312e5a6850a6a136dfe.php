@@ -37,13 +37,26 @@
         var events = [];
         var eventId = 1;
         <?php $__currentLoopData = $getClassTimetable; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                events.push({
-                    title: '<?php echo e($value->class_name); ?>-<?php echo e($value->subject_name); ?>',
-                    daysOfWeek: [<?php echo e($value->fullcalendar_day); ?>],
-                    startTime: '<?php echo e($value->start_time); ?>',
-                    endTime: '<?php echo e($value->end_time); ?>',
-                });
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+            events.push({
+                title: 'Class:<?php echo e($value->class_name); ?>-<?php echo e($value->subject_name); ?>',
+                daysOfWeek: [<?php echo e($value->fullcalendar_day); ?>],
+                startTime: '<?php echo e($value->start_time); ?>',
+                endTime: '<?php echo e($value->end_time); ?>',
+            });
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $getExamTimetable; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        console.log(<?php echo json_encode($exam, 15, 512) ?>);
+            events.push({
+                title: 'Exam: <?php echo e($exam->class_name); ?> - <?php echo e($exam->exam_name); ?> - <?php echo e($exam->subject_name); ?> (' +
+                    '<?php echo e(date('h:i A', strtotime($exam->start_time))); ?>' + ' to ' +
+                    '<?php echo e(date('h:i A', strtotime($exam->end_time))); ?>' + ')',
+                start: '<?php echo e($exam->exam_date); ?>',
+                end: '<?php echo e($exam->exam_date); ?>',
+                color: 'silver',
+                url: '<?php echo e(url('teacher/my_exam_timetable')); ?>',
+            });
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
@@ -55,7 +68,7 @@
             navLinks: true,
             editable: false,
             events: events,
-            initialView:'timeGridWeek'
+            initialView: 'timeGridWeek'
         });
 
         calendar.render();

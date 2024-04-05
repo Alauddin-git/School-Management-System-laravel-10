@@ -191,20 +191,20 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?php echo e(route('teacher.my_calendar')); ?>"
+                            class="nav-link <?php if(Request::segment(3) == 'calendar'): ?> active <?php endif; ?>">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                My Calendar
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?php echo e(route('teacher.change_password.show')); ?>"
                             class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 Change Password
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?php echo e(route('teacher.my_calendar')); ?>"
-                            class="nav-link <?php if(Request::segment(2) == 'my_calendar'): ?> active <?php endif; ?>">
-                            <i class="nav-icon far fa-user"></i>
-                            <p>
-                                My Calendar
                             </p>
                         </a>
                     </li>
