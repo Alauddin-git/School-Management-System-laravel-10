@@ -110,31 +110,36 @@
                           </li>
                         </ul>
                       </li>
-                    <li class="nav-item {{ in_array(Request::segment(3), ['exam', 'exam_schedule', 'assign-subject',
-                     'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ in_array(Request::segment(3), ['exam', 'exam_schedule', 
-                        'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : '' }}">
-                          <i class="nav-icon fas fa-table"></i>
-                          <p>
-                            Examinations
-                            <i class="fas fa-angle-left right"></i>
-                          </p>
+                      <li class="nav-item {{ in_array(Request::segment(3), ['exam', 'exam_schedule', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ in_array(Request::segment(3), ['exam', 'exam_schedule', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Examinations
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
                         </a>
                         <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="{{ route('admin.examinations.exam.list') }}" class="nav-link @if (Request::segment(3) == 'exam') active @endif">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Exam</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{{ route('admin.examinations.exam_schedule') }}" class="nav-link @if (Request::segment(3) == 'exam_schedule') active @endif">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Exam Schedule</p>
-                            </a>
-                          </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.examinations.exam.list') }}" class="nav-link {{ Request::segment(3) == 'exam' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Exam</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.examinations.exam_schedule') }}" class="nav-link {{ Request::segment(3) == 'exam_schedule' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Exam Schedule</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.examinations.marks_register') }}" class="nav-link {{ Request::segment(3) == 'marks_register' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Marks Register</p>
+                                </a>
+                            </li>
                         </ul>
-                      </li>
+                    </li>
+                    
                     <li class="nav-item">
                         <a href="{{ route('admin.account.edit') }}"
                             class="nav-link @if (Request::segment(2) == 'account') active @endif">

@@ -52,6 +52,15 @@ class ExamSchedulModel extends Model
                  ->get();
     }
 
+    static public function getSubejct($exam_id, $class_id)
+    {
+        return self::select('exam_schedule.*', 'subjects.name as subject_name', 'subjects.type as subject_type')
+                 ->join('subjects', 'subjects.id', 'exam_schedule.subject_id')
+                 ->where('exam_schedule.class_id', $class_id)
+                 ->where('exam_schedule.exam_id', $exam_id)
+                 ->get();
+    }
+
     static public function getExamTimetableTeacher($teacher_id)
     {
         return self::select('exam_schedule.*', 'classes.name as class_name', 'subjects.name as subject_name', 'exam.name as exam_name')

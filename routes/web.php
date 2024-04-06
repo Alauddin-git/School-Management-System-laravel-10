@@ -129,6 +129,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/examinations/exam_schedule', [ExaminationController::class, 'exam_schedule'])->name('admin.examinations.exam_schedule');
     Route::post('admin/examinations/exam_schedule/add', [ExaminationController::class, 'exam_schedule_insert'])->name('admin.examinations.exam_schedule.add.perform');
 
+    // mark_register
+    Route::get('admin/examinations/marks_register', [ExaminationController::class, 'marks_register_admin'])->name('admin.examinations.marks_register');
 
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');

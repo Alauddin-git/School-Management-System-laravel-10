@@ -155,6 +155,20 @@ class ExaminationController extends Controller
         }
     }
 
+    // admin side
+    public function marks_register_admin()
+    {
+        $data['getClass'] = Classe::getClass();
+        $data['getExam'] = ExamModel::getExam();
+        if(!empty(Request('exam_id')) && (!empty(Request('class_id'))))
+        {
+            $data['getSubject'] = ExamSchedulModel::getSubejct(Request('exam_id'), Request('class_id'));
+            $data['getStudentClass'] = User::getStudentClass(Request('class_id'));
+        }
+        $data['header_title'] = 'Marks Register';
+        return view('admin.examinations.marks_register', $data);
+    }
+
     // student side
     public function MyExamTimetableStudent(Request $request)
     {
