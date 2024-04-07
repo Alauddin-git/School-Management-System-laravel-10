@@ -12,6 +12,7 @@ use App\Models\admin\Class_subject;
 use App\Models\Assign_class_teacher;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\Class_subjectController;
+use App\Models\Marks_register;
 
 class ExaminationController extends Controller
 {
@@ -167,6 +168,43 @@ class ExaminationController extends Controller
         }
         $data['header_title'] = 'Marks Register';
         return view('admin.examinations.marks_register', $data);
+    }
+
+    // admin site
+    public function submit_marks_register(Request $request)
+    {
+        if(!empty($request->mark))
+        {
+            foreach($request->mark as $mark)
+            { 
+                $class_work = !empty($mark['class_work'])? $mark['class_work'] : 0;
+                $home_work = !empty($mark['home_work'])? $mark['home_work'] : 0;
+                $test_work = !empty($mark['test_work'])? $mark['test_work'] : 0;
+                $exam = !empty($mark['exam'])? $mark['exam'] : 0;
+                $getMark = Marks_register::checkAlreadyMark(Request('student_id') ,Request('exam_id'), Request('class_id'), $mark['subject_id']);
+                if(!empty($getMark))
+                {
+                    $mark_register = $getMark;
+                }
+                else
+                {
+                    $mark_register = new Marks_register();
+                    $mark_register->created_by = Auth::user()->id;
+                }
+                
+                $mark_register->student_id = $request->student_id;
+                $mark_register->exam_id = $request->exam_id;
+                $mark_register->class_id = $request->class_id;
+                $mark_register->subject_id = $mark['subject_id'];
+                $mark_register->class_work = $class_work;
+                $mark_register->home_work = $home_work;
+                $mark_register->test_work = $test_work;
+                $mark_register->exam = $exam;
+                $mark_register->save();
+            }
+        }
+        $json['message'] = "Mark Register Successfully saved";
+        echo json_encode($json);
     }
 
     // student side

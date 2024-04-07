@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="<?php echo e(asset('admin_asset')); ?>/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="<?php echo e(asset('admin_asset')); ?>/plugins/summernote/summernote-bs4.min.css">
+  <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
   <?php echo $__env->yieldContent('style'); ?>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

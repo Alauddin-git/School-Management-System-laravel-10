@@ -15,7 +15,6 @@
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content-header -->
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -77,38 +76,63 @@
                                                         <th>Student Name</th>
                                                         <?php $__currentLoopData = $getSubject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <th><?php echo e($subject->subject_name); ?><br>
-                                                                (<?php echo e($subject->subject_type); ?> : <?php echo e($subject->passing_marks); ?> / <?php echo e($subject->full_marks); ?>)
-                                                            </th> 
+                                                                (<?php echo e($subject->subject_type); ?> :
+                                                                <?php echo e($subject->passing_marks); ?> /
+                                                                <?php echo e($subject->full_marks); ?>)
+                                                            </th>
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php if(!empty($getStudentClass) && !empty($getStudentClass->count())): ?>
-                                                       <?php $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                           <tr>
-                                                            <td>
-                                                                <?php echo e($student->name); ?> <?php echo e($student->last_name); ?>
-
+                                                    <?php $__empty_1 = true; $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                        <tr>
+                                                            <form name="post"  class="submitMarks"> 
+                                                                <?php echo csrf_field(); ?>
+                                                                <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
+                                                                <input type="hidden" name="exam_id" value="<?php echo e(Request('exam_id')); ?>">
+                                                                <input type="hidden" name="class_id" value="<?php echo e(Request('class_id')); ?>">
+                                                                <td><?php echo e($student->name); ?> <?php echo e($student->last_name); ?></td>
+                                                                <?php
+                                                                    $i = 1;
+                                                                ?>
                                                                 <?php $__currentLoopData = $getSubject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php
+                                                                    $getMark = $subject->getMark($student->id, Request('exam_id'), Request('class_id'), $subject->subject_id);
+                                                                ?>
                                                                     <td>
-                                                                        <div>
+                                                                        <div style="margin-bottom: 10px;">
                                                                             Class Work
-                                                                            <input type="text" name="" class="form-control">
+                                                                            <input type="hidden" name="mark[<?php echo e($i); ?>][subject_id]" value="<?php echo e($subject->subject_id); ?>">
+                                                                            <input type="text" name="mark[<?php echo e($i); ?>][class_work]"  class="form-control" value="<?php echo e(!empty($getMark->class_work)? $getMark->class_work : ''); ?>">
                                                                         </div>
-                                                                        <div>
+                                                                        <div style="margin-bottom: 10px;">
                                                                             Home Work
-                                                                            <input type="text" name="" class="form-control">
+                                                                            <input type="text" name="mark[<?php echo e($i); ?>][home_work]" class="form-control" value="<?php echo e(!empty($getMark->home_work)? $getMark->home_work : ''); ?>">
                                                                         </div>
-                                                                        <div>
+                                                                        <div style="margin-bottom: 10px;">
+                                                                            Test Work
+                                                                            <input type="text" name="mark[<?php echo e($i); ?>][test_work]" class="form-control" value="<?php echo e(!empty($getMark->test_work)? $getMark->test_work : ''); ?>">
+                                                                        </div>
+                                                                        <div style="margin-bottom: 10px;">
                                                                             Exam
-                                                                            <input type="text" name="" class="form-control">
+                                                                            <input type="text" name="mark[<?php echo e($i); ?>][exam]" class="form-control" value="<?php echo e(!empty($getMark->exam)? $getMark->exam : ''); ?>">
                                                                         </div>
                                                                     </td>
+                                                                    <?php
+                                                                    $i++;
+                                                                ?>
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                            </td>
-                                                           </tr>
-                                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                <td>
+                                                                    <button type="submit"
+                                                                        class="btn btn-success">Save</button>
+                                                                </td>
+                                                            </form>
+                                                        </tr>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                                        <tr>
+                                                            <td colspan="100%">No students found</td>
+                                                        </tr>
                                                     <?php endif; ?>
                                                 </tbody>
                                             </table>
@@ -126,6 +150,23 @@
         </section>
         <!-- /.content -->
     </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('script'); ?>
+    <script type="text/javascript">
+        $('.submitMarks').submit(function(e){ 
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo e(url('admin/examinations/submit_marks_register')); ?>",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (response) {
+                    alert(response.message);
+                }
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sms\resources\views/admin/examinations/marks_register.blade.php ENDPATH**/ ?>
