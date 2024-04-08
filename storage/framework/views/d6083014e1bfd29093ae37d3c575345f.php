@@ -85,7 +85,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php $__empty_1 = true; $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                    <?php $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <tr>
                                                             <form name="post" class="submitMarks">
                                                                 <?php echo csrf_field(); ?>
@@ -98,19 +98,41 @@
                                                                 <td><?php echo e($student->name); ?> <?php echo e($student->last_name); ?></td>
                                                                 <?php
                                                                     $i = 1;
+                                                                    $totalStudentMark = 0;
+                                                                    $totalFullMark = 0;
+                                                                    $totalPassingMark = 0;
+                                                                    $pass_fail_vali = 0;
                                                                 ?>
-                                                                <?php $__currentLoopData = $getSubject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php $__currentLoopData = $getSubject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
                                                                     <?php
+                                                                        $totalMark = 0;
+                                                                        $totalFullMark =
+                                                                            $totalFullMark + $subject->full_marks;
+                                                                        $totalPassingMark =
+                                                                            $totalPassingMark + $subject->passing_marks;
+
                                                                         $getMark = $subject->getMark(
                                                                             $student->id,
                                                                             Request('exam_id'),
                                                                             Request('class_id'),
                                                                             $subject->subject_id,
                                                                         );
+                                                                        if (!empty($getMark)) {
+                                                                            $totalMark =
+                                                                                $getMark->class_work +
+                                                                                $getMark->home_work +
+                                                                                $getMark->test_work +
+                                                                                $getMark->exam;
+                                                                        }
+                                                                        $totalStudentMark =
+                                                                            $totalStudentMark + $totalMark;
                                                                     ?>
                                                                     <td>
                                                                         <div style="margin-bottom: 10px;">
                                                                             Class Work
+                                                                            <input type="hidden"
+                                                                                name="mark[<?php echo e($i); ?>][id]"
+                                                                                value="<?php echo e($subject->id); ?>">
                                                                             <input type="hidden"
                                                                                 name="mark[<?php echo e($i); ?>][subject_id]"
                                                                                 value="<?php echo e($subject->subject_id); ?>">
@@ -150,7 +172,25 @@
                                                                                 data-student="<?php echo e($student->id); ?>"
                                                                                 data-class = "<?php echo e(Request('class_id')); ?>"
                                                                                 data-exam = "<?php echo e(Request('exam_id')); ?>"
+                                                                                data-schedule = "<?php echo e($subject->id); ?>"
                                                                                 data-subject="<?php echo e($subject->subject_id); ?>">Save</button>
+                                                                        </div>
+                                                                        <div style="margin-bottom: 10px;">
+                                                                            <?php if(!empty($getMark)): ?>
+                                                                                <b>Total Mark: <?php echo e($totalMark); ?></b> <br>
+                                                                                <b>Passing Mark:
+                                                                                    <?php echo e($subject->passing_marks); ?></b> <br>
+                                                                                <?php if($totalMark >= $subject->passing_marks): ?>
+                                                                                   Result: <span
+                                                                                        style="color:green; font-weight: bold">Pass</span>
+                                                                                <?php else: ?>
+                                                                                  Result:  <span
+                                                                                        style="color:red; font-weight: bold">Fail</span>
+                                                                                    <?php
+                                                                                        $pass_fail_vali = 1;
+                                                                                    ?>
+                                                                                <?php endif; ?>
+                                                                            <?php endif; ?>
                                                                         </div>
                                                                     </td>
                                                                     <?php
@@ -159,15 +199,28 @@
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 <td>
                                                                     <button type="submit"
-                                                                        class="btn btn-success">Save</button>
+                                                                        class="btn btn-success">Save</button> <br>
+                                                                    <?php if(!empty($totalStudentMark)): ?>
+                                                                        Total Student Mark : <?php echo e($totalStudentMark); ?> <br>
+                                                                        Total Full Mark : <?php echo e($totalFullMark); ?> <br>
+                                                                        Total Passing Mark : <?php echo e($totalPassingMark); ?> <br>
+                                                                        <?php
+                                                                            $percentage = ($totalStudentMark * 100) / $totalFullMark;
+                                                                        ?>
+                                                                        <b>Percentage: </b><?php echo e(round($percentage, 2)); ?>%
+                                                                        <br>
+                                                                        <?php if($pass_fail_vali == 0): ?>
+                                                                           Result: <span
+                                                                                style="color:green; font-weight: bold">Pass</span>
+                                                                        <?php else: ?>
+                                                                           Result: <span
+                                                                                style="color:red; font-weight: bold">Fail</span>
+                                                                        <?php endif; ?>
+                                                                    <?php endif; ?>
                                                                 </td>
                                                             </form>
                                                         </tr>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                                        <tr>
-                                                            <td colspan="100%">No students found</td>
-                                                        </tr>
-                                                    <?php endif; ?>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -196,7 +249,12 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
-                    alert(response.message);
+                    toastr.options.closeButton = true;
+                    if (response.status == 200) {
+                        toastr.success(response.message);
+                    } else if (response.status == 400) {
+                        toastr.error(response.message);
+                    }
                 }
             });
         });
@@ -207,6 +265,7 @@
             var class_id = $(this).data('class');
             var exam_id = $(this).data('exam');
             var subject_id = $(this).data('subject');
+            var id = $(this).data('schedule');
             var class_work = $('#class_work_' + student_id + subject_id).val();
             var home_work = $('#home_work_' + student_id + subject_id).val();
             var test_work = $('#test_work_' + student_id + subject_id).val();
@@ -217,6 +276,7 @@
                 url: "<?php echo e(url('admin/examinatinos/single_submit_marks_register')); ?>",
                 data: {
                     "_token": "<?php echo e(csrf_token()); ?>",
+                    id: id,
                     student_id: student_id,
                     subject_id: subject_id,
                     exam_id: exam_id,
@@ -228,7 +288,12 @@
                 },
                 dataType: "json",
                 success: function(response) {
-                    alert(response.message)
+                    toastr.options.closeButton = true;
+                    if (response.status == 200) {
+                        toastr.success(response.message);
+                    } else if (response.status == 400) {
+                        toastr.error(response.message);
+                    }
                 }
             });
         });

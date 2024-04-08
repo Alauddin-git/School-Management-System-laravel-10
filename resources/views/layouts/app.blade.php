@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="{{ asset('admin_asset') }}/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('admin_asset') }}/plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('style')
 </head>
@@ -80,6 +81,8 @@
 <script src="{{ asset('admin_asset') }}/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('admin_asset') }}/dist/js/pages/dashboard.js"></script>
+<!-- Include Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 @yield('script')
 </body>
 </html>
