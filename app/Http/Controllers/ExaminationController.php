@@ -158,8 +158,21 @@ class ExaminationController extends Controller
         return view('admin.examinations.marks_register', $data);
     }
 
+    // teacher site
+    public function marks_register_teacher()
+    {
+        $data['getClass'] = Assign_class_teacher::getMyClassSubjectGroup(Auth::user()->id);  
+        $data['getExams'] = ExamSchedulModel::getExamTeacher(Auth::user()->id); 
+        if (!empty(Request('exam_id')) && (!empty(Request('class_id')))) {
+            $data['getSubject'] = ExamSchedulModel::getSubejct(Request('exam_id'), Request('class_id'));
+            $data['getStudentClass'] = User::getStudentClass(Request('class_id'));
+        }
+        $data['header_title'] = 'Marks Register';
+        return view('teacher.marks_register', $data);        
+    }
+
     // admin site
-    public function submit_marks_register(Request $request)
+    public function submit_marks_register_admin(Request $request)
     {
         $validation = 0;
         if (!empty($request->mark)) {
@@ -196,13 +209,10 @@ class ExaminationController extends Controller
                 }
             }
         }
-        if($validation == 0)
-        {
+        if ($validation == 0) {
             $json['status'] = 200;
             $json['message'] = "Mark Register Successfully saved";
-        }
-        else
-        {
+        } else {
             $json['status'] = 400;
             $json['message'] = "Some Subject Mark Register Successfully saved. But Some Subject mark greater than full mark";
         }
@@ -211,23 +221,23 @@ class ExaminationController extends Controller
 
 
     // admin side
-    public function single_submit_marks_register(Request $request)
-    {  
-        $id = $request->id;  
-        $getExamSchedule = ExamSchedulModel::find($id); 
+    public function single_submit_marks_register_admin(Request $request)
+    {
+        $id = $request->id;
+        $getExamSchedule = ExamSchedulModel::find($id);
 
         $fullMarks = $getExamSchedule->full_marks;
 
-        $class_work = !empty($request->class_work) ? $request->class_work : 0; 
+        $class_work = !empty($request->class_work) ? $request->class_work : 0;
         $home_work = !empty($request->home_work) ? $request->home_work :  0;
         $test_work = !empty($request->test_work) ? $request->test_work : 0;
         $exam = !empty($request->exam) ? $request->exam : 0;
-           
-        $totalMarks = $class_work + $home_work + $test_work + $exam;  
-        if ($fullMarks >=  $totalMarks) {  
-            $getMark = Marks_register::checkAlreadyMark(Request('student_id'), Request('exam_id'), Request('class_id'), $request->subject_id); 
-            if (!empty($getMark)) {   
-                $mark_register = $getMark;   
+
+        $totalMarks = $class_work + $home_work + $test_work + $exam;
+        if ($fullMarks >=  $totalMarks) {
+            $getMark = Marks_register::checkAlreadyMark(Request('student_id'), Request('exam_id'), Request('class_id'), $request->subject_id);
+            if (!empty($getMark)) {
+                $mark_register = $getMark;
             } else {
                 $mark_register = new Marks_register();
                 $mark_register->created_by = Auth::user()->id;
@@ -241,7 +251,7 @@ class ExaminationController extends Controller
             $mark_register->home_work = $home_work;
             $mark_register->test_work = $test_work;
             $mark_register->exam = $exam;
-            $mark_register->save();             
+            $mark_register->save();
 
             $json['status'] = 200;
             $json['message'] = "Mark Register Successfully saved";

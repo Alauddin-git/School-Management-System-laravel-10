@@ -205,6 +205,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('teacher.marks_register') }}"
+                            class="nav-link @if (Request::segment(2) == 'marks_register') active @endif">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                Marks Register
+                            </p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
                         <a href="{{ route('teacher.change_password.show') }}"
                             class="nav-link @if (Request::segment(2) == 'change_password') active @endif">
                             <i class="nav-icon far fa-user"></i>

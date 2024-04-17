@@ -131,8 +131,8 @@ Route::group(['middleware' => 'admin'], function () {
 
     // mark_register
     Route::get('admin/examinations/marks_register', [ExaminationController::class, 'marks_register_admin'])->name('admin.examinations.marks_register');
-    Route::post('admin/examinations/submit_marks_register', [ExaminationController::class, 'submit_marks_register']);
-    Route::post('admin/examinatinos/single_submit_marks_register', [ExaminationController::class, 'single_submit_marks_register']);
+    Route::post('admin/examinations/submit_marks_register', [ExaminationController::class, 'submit_marks_register_admin']);
+    Route::post('admin/examinatinos/single_submit_marks_register', [ExaminationController::class, 'single_submit_marks_register_admin']);
 
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');
@@ -159,6 +159,12 @@ Route::group(['middleware' => 'teacher'], function () {
 
     // calendar
     Route::get('teacher/mystudent/calendar', [CalendarController::class, 'myStudentCalendarTeacher'])->name('teacher.my_calendar');
+
+    // mark register
+    Route::get('teacher/marks_register', [ExaminationController::class, 'marks_register_teacher'])->name('teacher.marks_register');
+    Route::post('teacher/submit_marks_register', [ExaminationController::class, 'submit_marks_register_admin']);
+    Route::post('teacher/single_submit_marks_register', [ExaminationController::class, 'single_submit_marks_register_admin']);
+
 
     // account
     Route::get('teacher/account/edit', [UserController::class, 'myAccount'])->name('teacher.account.edit');

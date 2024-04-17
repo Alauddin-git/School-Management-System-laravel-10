@@ -205,6 +205,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?php echo e(route('teacher.marks_register')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'marks_register'): ?> active <?php endif; ?>">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                Marks Register
+                            </p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
                         <a href="<?php echo e(route('teacher.change_password.show')); ?>"
                             class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
