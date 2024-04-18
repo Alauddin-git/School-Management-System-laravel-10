@@ -288,6 +288,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?php echo e(route('student.my_exam_result')); ?>"
+                            class="nav-link <?php if(Request::segment(2) == 'my_exam_result'): ?> active <?php endif; ?>">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                             My Exam Result
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?php echo e(route('student.change_password.show')); ?>"
                             class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>

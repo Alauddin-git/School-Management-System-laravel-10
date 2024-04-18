@@ -185,6 +185,10 @@ class ExaminationController extends Controller
                 $test_work = !empty($mark['test_work']) ? $mark['test_work'] : 0;
                 $exam = !empty($mark['exam']) ? $mark['exam'] : 0;
 
+                $full_marks = !empty($mark['full_marks']) ? $mark['full_marks'] : 0;
+                $passing_marks = !empty($mark['passing_marks']) ? $mark['passing_marks'] : 0;
+
+
                 $totalMarks = $class_work = $home_work + $test_work + $exam;
                 if ($fullMarks >=  $totalMarks) {
                     $getMark = Marks_register::checkAlreadyMark(Request('student_id'), Request('exam_id'), Request('class_id'), $mark['subject_id']);
@@ -203,6 +207,8 @@ class ExaminationController extends Controller
                     $mark_register->home_work = $home_work;
                     $mark_register->test_work = $test_work;
                     $mark_register->exam = $exam;
+                    $mark_register->full_marks = $full_marks;
+                    $mark_register->passing_marks = $passing_marks;
                     $mark_register->save();
                 } else {
                     $validation = 1;
@@ -227,6 +233,7 @@ class ExaminationController extends Controller
         $getExamSchedule = ExamSchedulModel::find($id);
 
         $fullMarks = $getExamSchedule->full_marks;
+        $passing_marks = $getExamSchedule->passing_marks;
 
         $class_work = !empty($request->class_work) ? $request->class_work : 0;
         $home_work = !empty($request->home_work) ? $request->home_work :  0;
@@ -242,7 +249,6 @@ class ExaminationController extends Controller
                 $mark_register = new Marks_register();
                 $mark_register->created_by = Auth::user()->id;
             }
-            // dd($class_work);
             $mark_register->student_id = $request->student_id;
             $mark_register->exam_id = $request->exam_id;
             $mark_register->class_id = $request->class_id;
@@ -251,6 +257,8 @@ class ExaminationController extends Controller
             $mark_register->home_work = $home_work;
             $mark_register->test_work = $test_work;
             $mark_register->exam = $exam;
+            $mark_register->full_marks = $fullMarks;
+            $mark_register->passing_marks = $passing_marks;
             $mark_register->save();
 
             $json['status'] = 200;
@@ -290,6 +298,40 @@ class ExaminationController extends Controller
         $data['exam_timetables'] = $result;
         $data['header_title'] = 'My Exam Timetable';
         return view('student.my_exam_timetable', $data);
+    }
+
+    // student site
+    public function myExamResult()
+    {
+        $result = [];
+        $getExam = Marks_register::getExam(Auth::user()->id);
+        foreach($getExam as $exam)
+        { 
+            $dataE = [];
+            $dataE['exam_name'] = $exam->exam_name;
+            $getExamSubject = Marks_register::getExamSubject($exam->exam_id, Auth::user()->id);
+            $dataSubject = [];
+            foreach($getExamSubject as $examSuject)  
+            { 
+                $dataS = [];
+                $total_score = $examSuject['class_work'] +  $examSuject['test_work'] + $examSuject['home_work'] + $examSuject['exam'] ;
+                $dataS['subject_name'] = $examSuject['subject_name'];
+                $dataS['class_work'] = $examSuject['class_work'];
+                $dataS['test_work'] = $examSuject['test_work'];
+                $dataS['home_work'] = $examSuject['home_work'];
+                $dataS['exam'] = $examSuject['exam'];
+                $dataS['total_score'] = $total_score;
+                $dataS['full_marks'] = $examSuject['full_marks'];
+                $dataS['passing_marks'] = $examSuject['passing_marks'];
+                $dataSubject[] = $dataS;
+            }
+            $dataE['subject'] = $dataSubject;
+            $result[] = $dataE; 
+        } 
+        $data['examResults'] = $result;
+        $data['header_title'] = 'My Exam Result';
+        return view('student.my_exam_result', $data);
+        
     }
 
     // teacher side

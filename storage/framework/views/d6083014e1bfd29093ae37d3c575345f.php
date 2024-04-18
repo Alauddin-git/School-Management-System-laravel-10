@@ -131,6 +131,12 @@
                                                                         <div style="margin-bottom: 10px;">
                                                                             Class Work
                                                                             <input type="hidden"
+                                                                                name="mark[<?php echo e($i); ?>][full_marks]"
+                                                                                value="<?php echo e($subject->full_marks); ?>">
+                                                                            <input type="hidden"
+                                                                                name="mark[<?php echo e($i); ?>][passing_marks]"
+                                                                                value="<?php echo e($subject->passing_marks); ?>">
+                                                                            <input type="hidden"
                                                                                 name="mark[<?php echo e($i); ?>][id]"
                                                                                 value="<?php echo e($subject->id); ?>">
                                                                             <input type="hidden"

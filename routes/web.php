@@ -193,6 +193,8 @@ Route::group(['middleware' => 'student'], function () {
     // calendar
     Route::get('student/my_calendar', [CalendarController::class, 'myCalendarStudent'])->name('student.my_calendar');
 
+    // exam result
+    Route::get('student/my_exam_result', [ExaminationController::class, 'myExamResult'])->name('student.my_exam_result');
 
     // password_change
     Route::get('student/change_password', [UserController::class, 'change_passwordShow'])->name('student.change_password.show');
