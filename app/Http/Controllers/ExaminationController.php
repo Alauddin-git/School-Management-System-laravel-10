@@ -330,8 +330,7 @@ class ExaminationController extends Controller
         } 
         $data['examResults'] = $result;
         $data['header_title'] = 'My Exam Result';
-        return view('student.my_exam_result', $data);
-        
+        return view('student.my_exam_result', $data); 
     }
 
     // teacher side
@@ -402,5 +401,40 @@ class ExaminationController extends Controller
         $data['exam_timetables'] = $result;
         $data['header_title'] = ' Exam Timetable';
         return view('parent.myStudent_exam_timetable', $data);
+    }
+
+    // parent side
+    public function myStudentExamResultParent($student_id)
+    {
+        $data['getStudent']= User::find($student_id);
+        $data['mySubjects'] = Class_subject::mySubjectName(User::find($student_id)->classe_id);
+        $result = [];
+        $getExam = Marks_register::getExam($student_id);
+        foreach($getExam as $exam)
+        { 
+            $dataE = [];
+            $dataE['exam_name'] = $exam->exam_name;
+            $getExamSubject = Marks_register::getExamSubject($exam->exam_id, $student_id);
+            $dataSubject = [];
+            foreach($getExamSubject as $examSuject)  
+            { 
+                $dataS = [];
+                $total_score = $examSuject['class_work'] +  $examSuject['test_work'] + $examSuject['home_work'] + $examSuject['exam'] ;
+                $dataS['subject_name'] = $examSuject['subject_name'];
+                $dataS['class_work'] = $examSuject['class_work'];
+                $dataS['test_work'] = $examSuject['test_work'];
+                $dataS['home_work'] = $examSuject['home_work'];
+                $dataS['exam'] = $examSuject['exam'];
+                $dataS['total_score'] = $total_score;
+                $dataS['full_marks'] = $examSuject['full_marks'];
+                $dataS['passing_marks'] = $examSuject['passing_marks'];
+                $dataSubject[] = $dataS;
+            }
+            $dataE['subject'] = $dataSubject;
+            $result[] = $dataE; 
+        } 
+        $data['examResults'] = $result;
+        $data['header_title'] = 'My Exam Result';
+        return view('parent.myStudent_exam_result', $data); 
     }
 }

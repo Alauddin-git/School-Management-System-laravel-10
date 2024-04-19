@@ -222,4 +222,8 @@ Route::group(['middleware' => 'parent'], function () {
 
     // calendar
     Route::get('parent/my_student/calendar/{student_id}', [CalendarController::class, 'myStudentCalendarParent'])->name('parent.my_student.calendar');
+
+    //my student exam result
+    Route::get('parent/my_student/exam_result/{student_id}', [ExaminationController::class, 'myStudentExamResultParent'])->name('parent.my_student.exam_result');
+
 });

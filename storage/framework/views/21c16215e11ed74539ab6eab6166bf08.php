@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -50,46 +50,48 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($getParentStudents as $student)
+                                        <?php $__currentLoopData = $getParentStudents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>{{ $student->id }}</td>
+                                            <td><?php echo e($student->id); ?></td>
                                             <td>
-                                                @if ($student->getProfile())
-                                                    <img src="{{ $student->getProfile() }}"
+                                                <?php if($student->getProfile()): ?>
+                                                    <img src="<?php echo e($student->getProfile()); ?>"
                                                         style="height: 50px; width:50px; border-radius:50px;">
-                                                @endif
+                                                <?php endif; ?>
                                             </td>
-                                            <td>{{ $student->name }} {{ $student->last_name }}</td>
-                                            <td>{{ $student->email }}</td>
-                                            <td>{{ $student->admission_number }}</td>
-                                            <td>{{ $student->roll_number }}</td>
-                                            <td>{{ $student->class_name }}</td>
-                                            <td>{{ $student->gender }}</td>
+                                            <td><?php echo e($student->name); ?> <?php echo e($student->last_name); ?></td>
+                                            <td><?php echo e($student->email); ?></td>
+                                            <td><?php echo e($student->admission_number); ?></td>
+                                            <td><?php echo e($student->roll_number); ?></td>
+                                            <td><?php echo e($student->class_name); ?></td>
+                                            <td><?php echo e($student->gender); ?></td>
                                             <td>
-                                                @if (!@empty($student->date_of_birth))
-                                                    {{ date('d-m-Y', strtotime($student->date_of_birth)) }}
-                                                @endif
+                                                <?php if(!@empty($student->date_of_birth)): ?>
+                                                    <?php echo e(date('d-m-Y', strtotime($student->date_of_birth))); ?>
+
+                                                <?php endif; ?>
                                             </td>
-                                            <td>{{ $student->caste }}</td>
-                                            <td>{{ $student->religion }}</td>
-                                            <td>{{ $student->mobile_number }}</td>
+                                            <td><?php echo e($student->caste); ?></td>
+                                            <td><?php echo e($student->religion); ?></td>
+                                            <td><?php echo e($student->mobile_number); ?></td>
                                             <td>
-                                                @if (!@empty($student->admission_date))
-                                                    {{ date('d-m-Y', strtotime($student->admission_date)) }}
-                                                @endif
+                                                <?php if(!@empty($student->admission_date)): ?>
+                                                    <?php echo e(date('d-m-Y', strtotime($student->admission_date))); ?>
+
+                                                <?php endif; ?>
                                             </td>
-                                            <td>{{ $student->blood_group }}</td>
-                                            <td>{{ $student->height }}</td>
-                                            <td>{{ $student->weight }}</td>
-                                            <td>{{ date('d-m-Y h:i A', strtotime($student->created_at)) }}</td>
+                                            <td><?php echo e($student->blood_group); ?></td>
+                                            <td><?php echo e($student->height); ?></td>
+                                            <td><?php echo e($student->weight); ?></td>
+                                            <td><?php echo e(date('d-m-Y h:i A', strtotime($student->created_at))); ?></td>
                                             <td>
-                                                 <a class="btn btn-success btn-sm" href="{{ route('parent.my_student.subject', $student->id) }}">Subject</a>
-                                                 <a class="btn btn-primary btn-sm" href="{{ route('parent.my_student.exam_timetable', $student->id) }}">Exam Timetable</a>
-                                                 <a class="btn btn-warning btn-sm" href="{{ route('parent.my_student.exam_result', $student->id) }}">Exam Result</a>
-                                                 <a class="btn btn-secondary btn-sm" href="{{ route('parent.my_student.calendar', $student->id) }}">Calendar</a>
+                                                 <a class="btn btn-success btn-sm" href="<?php echo e(route('parent.my_student.subject', $student->id)); ?>">Subject</a>
+                                                 <a class="btn btn-primary btn-sm" href="<?php echo e(route('parent.my_student.exam_timetable', $student->id)); ?>">Exam Timetable</a>
+                                                 <a class="btn btn-warning btn-sm" href="<?php echo e(route('parent.my_student.exam_result', $student->id)); ?>">Exam Result</a>
+                                                 <a class="btn btn-secondary btn-sm" href="<?php echo e(route('parent.my_student.calendar', $student->id)); ?>">Calendar</a>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
 
@@ -104,4 +106,6 @@
         </section>
         <!-- /.content -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sms\resources\views/parent/my_student.blade.php ENDPATH**/ ?>
