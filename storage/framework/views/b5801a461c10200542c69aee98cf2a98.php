@@ -28,7 +28,7 @@
                                 <table class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Subject Name</th>
+                                            <th>Subject</th>
                                             <th>Class Work</th>
                                             <th>Test Work</th>
                                             <th>Home Work</th>
@@ -36,10 +36,20 @@
                                             <th>Total Score</th>
                                             <th>Full Marks</th>
                                             <th>Passing Marks</th>
+                                            <th>Result</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php
+                                            $total_score = 0;
+                                            $full_marks = 0;
+                                            $result_validation = 0;
+                                        ?>
                                         <?php $__currentLoopData = $examResult['subject']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
+                                           $total_score = $total_score + $subject['total_score'];
+                                           $full_marks = $full_marks + $subject['full_marks'];
+                                        ?>
                                         <tr>
                                             <td><?php echo e($subject['subject_name']); ?></td>
                                             <td><?php echo e($subject['class_work']); ?></td>
@@ -49,8 +59,35 @@
                                             <td><?php echo e($subject['total_score']); ?></td>
                                             <td><?php echo e($subject['full_marks']); ?></td>
                                             <td><?php echo e($subject['passing_marks']); ?></td>
+                                            <td>
+                                                <?php if($subject['total_score'] >= $subject['passing_marks']): ?>
+                                                    <span style="color: green; font-weight:bold">Pass</span>
+                                                <?php else: ?>
+                                                <?php
+                                                    $result_validation = 1;
+                                                ?>
+                                               <span style="color: red; font-weight:bold">Fail</span>
+                                                <?php endif; ?>
+                                            </td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <tr>
+                                            <td colspan="2">
+                                                <b>Grand Total: <?php echo e($total_score); ?>/<?php echo e($full_marks); ?></b>
+                                            </td>
+                                            <td colspan="3">
+                                                <b>Percentage: <?php echo e(round(($total_score * 100) / $full_marks, 2)); ?> %</b>
+                                            </td>
+                                            <td colspan="5">
+                                                <b>Result: 
+                                                    <?php if($result_validation == 0): ?>
+                                                        <span style="color:green;">Pass</span>
+                                                    <?php else: ?>
+                                                        <span style="color:red;">Fail</span>
+                                                    <?php endif; ?>
+                                                </b>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
