@@ -184,6 +184,12 @@
                                                                                 <b>Total Mark: {{ $totalMark }}</b> <br>
                                                                                 <b>Passing Mark:
                                                                                     {{ $subject->passing_marks }}</b> <br>
+                                                                                @php
+                                                                                   $getLoopGrade = App\Models\Marks_grade::getGrade($totalMark);
+                                                                                @endphp
+                                                                                @if (!empty($getLoopGrade))
+                                                                                    <b>Grade:</b> {{ $getLoopGrade }} <br>
+                                                                                @endif
                                                                                 @if ($totalMark >= $subject->passing_marks)
                                                                                    Result: <span
                                                                                         style="color:green; font-weight: bold">Pass</span>
@@ -210,9 +216,13 @@
                                                                         Total Passing Mark : {{ $totalPassingMark }} <br>
                                                                         @php
                                                                             $percentage = ($totalStudentMark * 100) / $totalFullMark;
+                                                                            $getGrade = App\Models\Marks_grade::getGrade($percentage);
                                                                         @endphp
                                                                         <b>Percentage: </b>{{ round($percentage, 2) }}%
                                                                         <br>
+                                                                        @if (!empty($getGrade))
+                                                                        <b>Grade: </b>{{ $getGrade }} <br>
+                                                                        @endif
                                                                         @if ($pass_fail_vali == 0)
                                                                            Result: <span
                                                                                 style="color:green; font-weight: bold">Pass</span>

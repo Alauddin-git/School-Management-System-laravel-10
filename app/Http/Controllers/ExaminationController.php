@@ -12,7 +12,10 @@ use App\Models\admin\Class_subject;
 use App\Models\Assign_class_teacher;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\Class_subjectController;
+use App\Models\Marks_grade;
 use App\Models\Marks_register;
+use PhpParser\Builder\Function_;
+use PhpParser\Node\Expr\FuncCall;
 
 class ExaminationController extends Controller
 {
@@ -158,7 +161,7 @@ class ExaminationController extends Controller
         return view('admin.examinations.marks_register', $data);
     }
 
-    // teacher site
+    // teacher side
     public function marks_register_teacher()
     {
         $data['getClass'] = Assign_class_teacher::getMyClassSubjectGroup(Auth::user()->id);  
@@ -171,7 +174,7 @@ class ExaminationController extends Controller
         return view('teacher.marks_register', $data);        
     }
 
-    // admin site
+    // admin side
     public function submit_marks_register_admin(Request $request)
     {
         $validation = 0;
@@ -270,6 +273,51 @@ class ExaminationController extends Controller
         echo json_encode($json);
     }
 
+    // admin side mark grade
+    public function marks_grade()
+    {
+        $data['getMarksGrades'] = Marks_grade::getRecord();
+        $data['header_title'] = 'Marks Grade';
+        return view('admin.examinations.marks_grade.list', $data);
+    }
+
+    public function marks_grade_create()
+    {
+        $data['header_title'] = 'Add New Marks Grade';
+        return view('admin.examinations.marks_grade.add', $data);
+    }
+
+    public function marks_grade_insert(Request $request)
+    {
+        $mark = Marks_grade::make($request->except('created_by'));
+        $mark->created_by = Auth::user()->id;
+        $mark->save();
+        toastr()->addsuccess('Mark Grade Successfully Created');
+        return redirect()->route('admin.examinations.marks_grade.list');
+    }
+
+    public function marks_grade_edit(Marks_grade $marks_grade)
+    {  
+        $data['marks_grade'] = $marks_grade;
+        $data['header_title'] = 'Edit Marks Grade';
+        return view('admin.examinations.marks_grade.edit', $data);
+    }
+
+    public function marks_grade_update(Request $request, Marks_grade $marks_grade)
+    {
+        $marks_grade->update($request->all());
+        toastr()->addsuccess('Mark Grade Successfully Updated');
+        return redirect()->route('admin.examinations.marks_grade.list');
+    }
+
+    public Function marks_grade_destroy(Marks_grade $marks_grade)
+    {
+        $marks_grade->delete();
+        toastr()->addsuccess('Mark Grade Successfully Deleted');
+        return redirect()->route('admin.examinations.marks_grade.list');
+    }
+
+
     // student side
     public function MyExamTimetableStudent(Request $request)
     {
@@ -300,7 +348,7 @@ class ExaminationController extends Controller
         return view('student.my_exam_timetable', $data);
     }
 
-    // student site
+    // student side
     public function myExamResult()
     {
         $result = [];

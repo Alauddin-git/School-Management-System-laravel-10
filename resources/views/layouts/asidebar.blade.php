@@ -137,6 +137,12 @@
                                     <p>Marks Register</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.examinations.marks_grade.list') }}" class="nav-link {{ Request::segment(3) == 'marks_grade' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Marks Grade</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     

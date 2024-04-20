@@ -134,6 +134,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('admin/examinations/submit_marks_register', [ExaminationController::class, 'submit_marks_register_admin']);
     Route::post('admin/examinatinos/single_submit_marks_register', [ExaminationController::class, 'single_submit_marks_register_admin']);
 
+    // mark grade
+    Route::get('admin/examinations/marks_grade', [ExaminationController::class, 'marks_grade'])->name('admin.examinations.marks_grade.list');
+    Route::get('admin/examinations/marks_grade/add', [ExaminationController::class, 'marks_grade_create'])->name('admin.examinations.marks_grade.add');
+    Route::post('admin/examinations/marks_grade/add', [ExaminationController::class, 'marks_grade_insert'])->name('admin.examinations.marks_grade.add.perform');
+    Route::get('admin/examinations/marks_grade/edit/{marks_grade}', [ExaminationController::class, 'marks_grade_edit'])->name('admin.examinations.marks_grade.edit');
+    Route::post('admin/examinations/marks_grade/update/{marks_grade}', [ExaminationController::class, 'marks_grade_update'])->name('admin.examinations.marks_grade.update');
+    Route::get('admin/examinations/marks_grade/delete/{marks_grade}', [ExaminationController::class, 'marks_grade_destroy'])->name('admin.examinations.marks_grade.delete');
+
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');
     Route::post('admin/account/update', [UserController::class, 'updateAccountAdmin'])->name('admin.account.update');
