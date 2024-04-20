@@ -1,21 +1,22 @@
 <?php
 
+use App\Models\Assign_class_teacher;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\ClassController;
-use App\Http\Controllers\admin\SubjectController;
-use App\Http\Controllers\admin\Class_subjectController;
-use App\Http\Controllers\AssignClassTeacherController;
-use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\Class_TimeTableController;
 use App\Http\Controllers\ExaminationController;
-use App\Models\Assign_class_teacher;
+use App\Http\Controllers\admin\SubjectController;
+use App\Http\Controllers\Class_TimeTableController;
+use App\Http\Controllers\AssignClassTeacherController;
+use App\Http\Controllers\admin\Class_subjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +142,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/examinations/marks_grade/edit/{marks_grade}', [ExaminationController::class, 'marks_grade_edit'])->name('admin.examinations.marks_grade.edit');
     Route::post('admin/examinations/marks_grade/update/{marks_grade}', [ExaminationController::class, 'marks_grade_update'])->name('admin.examinations.marks_grade.update');
     Route::get('admin/examinations/marks_grade/delete/{marks_grade}', [ExaminationController::class, 'marks_grade_destroy'])->name('admin.examinations.marks_grade.delete');
+
+    // student attendance
+    Route::get('admin/attendance/student', [AttendanceController::class, 'studentAttendance'])->name('admin.attendance.student');
 
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');

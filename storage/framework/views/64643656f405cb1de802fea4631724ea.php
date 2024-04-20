@@ -67,51 +67,74 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item <?php echo e(in_array(Request::segment(2), ['class', 'subject', 'assign-subject',
-                     'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
-                        <a href="#" class="nav-link <?php echo e(in_array(Request::segment(2), ['class', 'subject', 
-                        'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
-                          <i class="nav-icon fas fa-table"></i>
-                          <p>
-                            Academics
-                            <i class="fas fa-angle-left right"></i>
-                          </p>
+                    <li
+                        class="nav-item <?php echo e(in_array(Request::segment(2), [
+                            'class',
+                            'subject',
+                            'assign-subject',
+                            'assign_class_teacher',
+                            'class_timetable',
+                        ])
+                            ? 'menu-is-opening menu-open'
+                            : ''); ?>">
+                        <a href="#"
+                            class="nav-link <?php echo e(in_array(Request::segment(2), [
+                                'class',
+                                'subject',
+                                'assign-subject',
+                                'assign_class_teacher',
+                                'class_timetable',
+                            ])
+                                ? 'active'
+                                : ''); ?>">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Academics
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
                         </a>
                         <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="<?php echo e(route('admin.class.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'class'): ?> active <?php endif; ?>">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Class</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="<?php echo e(route('admin.subject.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'subject'): ?> active <?php endif; ?>">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Subject</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="<?php echo e(route('admin.assign-subject.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'assign-subject'): ?> active <?php endif; ?>">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Assign Subject</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="<?php echo e(route('admin.class_timetable.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'class_timetable'): ?> active <?php endif; ?>">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Class Timetable</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="<?php echo e(route('admin.assign_class_teacher.list')); ?>" class="nav-link <?php if(Request::segment(2) == 'assign_class_teacher'): ?> active <?php endif; ?>">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Assign Class Teacher</p>
-                            </a>
-                          </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.class.list')); ?>"
+                                    class="nav-link <?php if(Request::segment(2) == 'class'): ?> active <?php endif; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Class</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.subject.list')); ?>"
+                                    class="nav-link <?php if(Request::segment(2) == 'subject'): ?> active <?php endif; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Subject</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.assign-subject.list')); ?>"
+                                    class="nav-link <?php if(Request::segment(2) == 'assign-subject'): ?> active <?php endif; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Assign Subject</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.class_timetable.list')); ?>"
+                                    class="nav-link <?php if(Request::segment(2) == 'class_timetable'): ?> active <?php endif; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Class Timetable</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.assign_class_teacher.list')); ?>"
+                                    class="nav-link <?php if(Request::segment(2) == 'assign_class_teacher'): ?> active <?php endif; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Assign Class Teacher</p>
+                                </a>
+                            </li>
                         </ul>
-                      </li>
-                      <li class="nav-item <?php echo e(in_array(Request::segment(3), ['exam', 'exam_schedule', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
-                        <a href="#" class="nav-link <?php echo e(in_array(Request::segment(3), ['exam', 'exam_schedule', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
+                    </li>
+                    <li
+                        class="nav-item <?php echo e(in_array(Request::segment(3), ['exam', 'exam_schedule', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
+                        <a href="#"
+                            class="nav-link <?php echo e(in_array(Request::segment(3), ['exam', 'exam_schedule', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Examinations
@@ -120,32 +143,56 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?php echo e(route('admin.examinations.exam.list')); ?>" class="nav-link <?php echo e(Request::segment(3) == 'exam' ? 'active' : ''); ?>">
+                                <a href="<?php echo e(route('admin.examinations.exam.list')); ?>"
+                                    class="nav-link <?php echo e(Request::segment(3) == 'exam' ? 'active' : ''); ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Exam</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?php echo e(route('admin.examinations.exam_schedule')); ?>" class="nav-link <?php echo e(Request::segment(3) == 'exam_schedule' ? 'active' : ''); ?>">
+                                <a href="<?php echo e(route('admin.examinations.exam_schedule')); ?>"
+                                    class="nav-link <?php echo e(Request::segment(3) == 'exam_schedule' ? 'active' : ''); ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Exam Schedule</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?php echo e(route('admin.examinations.marks_register')); ?>" class="nav-link <?php echo e(Request::segment(3) == 'marks_register' ? 'active' : ''); ?>">
+                                <a href="<?php echo e(route('admin.examinations.marks_register')); ?>"
+                                    class="nav-link <?php echo e(Request::segment(3) == 'marks_register' ? 'active' : ''); ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Marks Register</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?php echo e(route('admin.examinations.marks_grade.list')); ?>" class="nav-link <?php echo e(Request::segment(3) == 'marks_grade' ? 'active' : ''); ?>">
+                                <a href="<?php echo e(route('admin.examinations.marks_grade.list')); ?>"
+                                    class="nav-link <?php echo e(Request::segment(3) == 'marks_grade' ? 'active' : ''); ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Marks Grade</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    
+
+                    <li
+                        class="nav-item <?php echo e(in_array(Request::segment(3), ['student', 'exam_schedule', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
+                        <a href="#"
+                            class="nav-link <?php echo e(in_array(Request::segment(3), ['student', 'exam_schedule', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Attendance
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.attendance.student')); ?>"
+                                    class="nav-link <?php echo e(Request::segment(3) == 'student' ? 'active' : ''); ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Student Attendance</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a href="<?php echo e(route('admin.account.edit')); ?>"
                             class="nav-link <?php if(Request::segment(2) == 'account'): ?> active <?php endif; ?>">
@@ -219,7 +266,7 @@
                             </p>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a href="<?php echo e(route('teacher.change_password.show')); ?>"
                             class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
@@ -298,7 +345,7 @@
                             class="nav-link <?php if(Request::segment(2) == 'my_exam_result'): ?> active <?php endif; ?>">
                             <i class="nav-icon far fa-user"></i>
                             <p>
-                             My Exam Result
+                                My Exam Result
                             </p>
                         </a>
                     </li>
