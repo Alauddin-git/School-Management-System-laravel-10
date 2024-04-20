@@ -71,14 +71,21 @@
                                             </td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
+                                        $percentage = ($total_score * 100) / $full_marks ;
+                                        $getGrade = App\Models\Marks_grade::getGrade($percentage);
+                                         ?>
                                         <tr>
                                             <td colspan="2">
                                                 <b>Grand Total: <?php echo e($total_score); ?>/<?php echo e($full_marks); ?></b>
                                             </td>
                                             <td colspan="3">
-                                                <b>Percentage: <?php echo e(round(($total_score * 100) / $full_marks, 2)); ?> %</b>
+                                                <b>Percentage: <?php echo e(round($percentage, 2)); ?> %</b>
                                             </td>
-                                            <td colspan="5">
+                                            <td colspan="2">
+                                                <b>Grade: <?php echo e($getGrade); ?> </b>
+                                            </td>
+                                            <td colspan="3">
                                                 <b>Result: 
                                                     <?php if($result_validation == 0): ?>
                                                         <span style="color:green;">Pass</span>

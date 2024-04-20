@@ -131,6 +131,12 @@
                                                                         <div style="margin-bottom: 10px;">
                                                                             Class Work
                                                                             <input type="hidden"
+                                                                            name="mark[<?php echo e($i); ?>][full_marks]"
+                                                                            value="<?php echo e($subject->full_marks); ?>">
+                                                                        <input type="hidden"
+                                                                            name="mark[<?php echo e($i); ?>][passing_marks]"
+                                                                            value="<?php echo e($subject->passing_marks); ?>">
+                                                                            <input type="hidden"
                                                                                 name="mark[<?php echo e($i); ?>][id]"
                                                                                 value="<?php echo e($subject->id); ?>">
                                                                             <input type="hidden"
@@ -180,6 +186,12 @@
                                                                                 <b>Total Mark: <?php echo e($totalMark); ?></b> <br>
                                                                                 <b>Passing Mark:
                                                                                     <?php echo e($subject->passing_marks); ?></b> <br>
+                                                                                    <?php
+                                                                                    $getLoopGrade = App\Models\Marks_grade::getGrade($totalMark);
+                                                                                 ?>
+                                                                                 <?php if(!empty($getLoopGrade)): ?>
+                                                                                     <b>Grade:</b> <?php echo e($getLoopGrade); ?> <br>
+                                                                                 <?php endif; ?>
                                                                                 <?php if($totalMark >= $subject->passing_marks): ?>
                                                                                    Result: <span
                                                                                         style="color:green; font-weight: bold">Pass</span>
@@ -206,9 +218,13 @@
                                                                         Total Passing Mark : <?php echo e($totalPassingMark); ?> <br>
                                                                         <?php
                                                                             $percentage = ($totalStudentMark * 100) / $totalFullMark;
+                                                                            $getGrade = App\Models\Marks_grade::getGrade($percentage);
                                                                         ?>
                                                                         <b>Percentage: </b><?php echo e(round($percentage, 2)); ?>%
                                                                         <br>
+                                                                        <?php if(!empty($getGrade)): ?>
+                                                                        <b>Grade: </b><?php echo e($getGrade); ?> <br>
+                                                                        <?php endif; ?>
                                                                         <?php if($pass_fail_vali == 0): ?>
                                                                            Result: <span
                                                                                 style="color:green; font-weight: bold">Pass</span>
