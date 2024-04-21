@@ -27,7 +27,7 @@
                         <form action="" method="get">
                             <div class="row p-1">
                                 <div class="form-group  col-md-3">
-                                    <select class="form-control" name="class_id" required>
+                                    <select class="form-control" name="class_id" id="getClass" required>
                                         <option value="">Select Class</option>
                                         <?php $__currentLoopData = $getClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option <?php echo e(Request('class_id') == $class->id ? 'selected' : ''); ?>
@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group  col-md-3">
-                                    <input type="date" class="form-control" name="attendance_date" value="<?php echo e(Request('attendance_date')); ?>" required>
+                                    <input type="date" class="form-control" id="getAttendanceDate" name="attendance_date" value="<?php echo e(Request('attendance_date')); ?>" required>
                                 </div>
                                 <div class="form-group col-md-3 d-flex align-items-center">
                                     <button class="btn btn-primary btn-outlook mr-2" type="submit">Search</button>
@@ -71,14 +71,22 @@
                             <tbody>
                                 <?php if(!empty($getStudentClass) && !empty($getStudentClass->count())): ?>
                                    <?php $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   <?php
+                                   $attendance_type = '';
+                                       $getAttendance = $student->getAttendance($student->id, Request('class_id'), Request('attendance_date'));
+                                       if(!empty($getAttendance->attendance_type))
+                                       {
+                                           $attendance_type = $getAttendance->attendance_type;
+                                       }
+                                   ?>
                                        <tr>
                                         <td><?php echo e($student->id); ?></td>
                                         <td><?php echo e($student->name); ?> <?php echo e($student->last_name); ?></td>
                                         <td>
-                                            <label style="margin-right: 10px"><input  type="radio" name="attendance<?php echo e($student->id); ?>">Present</label>
-                                            <label style="margin-right: 10px"><input  type="radio" name="attendance<?php echo e($student->id); ?>">Late</label>
-                                            <label style="margin-right: 10px"><input  type="radio" name="attendance<?php echo e($student->id); ?>">Absent</label>
-                                            <label style="margin-right: 10px"><input  type="radio" name="attendance<?php echo e($student->id); ?>">Half Day</label>
+                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="1" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 1): echo 'checked'; endif; ?>>Present</label>
+                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="2" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 2): echo 'checked'; endif; ?>>Late</label>
+                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="3" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 3): echo 'checked'; endif; ?>>Absent</label>
+                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="4" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 4): echo 'checked'; endif; ?>>Half Day</label>
                                         </td>
                                        </tr>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -90,9 +98,37 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
     </div>
 <?php $__env->stopSection(); ?>
 
- 
+ <?php $__env->startSection('script'); ?>
+     <script type="text/javascript">
+        $('.saveAttendance').change(function(e) {
+            e.preventDefault();
+            var student_id = $(this).attr('id');
+            var attendance_type = $(this).val();
+            var class_id = $('#getClass').val();
+            var attendance_date = $('#getAttendanceDate').val();
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo e(route('admin.attendance.student.save')); ?>",
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    student_id : student_id,
+                    attendance_type : attendance_type,
+                    class_id : class_id,
+                    attendance_date : attendance_date
+                },
+                dataType: "json",
+                success: function(response) {
+                    toastr.options.closeButton = true;
+                    if (response.status == 200) {
+                        toastr.success(response.message);
+                    }
+                }
+            });
+        });
+     </script>
+ <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sms\resources\views/admin/attendance/student.blade.php ENDPATH**/ ?>

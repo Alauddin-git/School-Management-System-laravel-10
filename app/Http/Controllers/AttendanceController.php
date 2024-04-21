@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\admin\Classe;
 use Illuminate\Http\Request;
+use App\Models\Student_attendance;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -18,5 +20,25 @@ class AttendanceController extends Controller
         }
         $data['header_title'] = 'Student Attendance';
         return view('admin.attendance.student', $data);
+    }
+
+    public function studentAttendanceSubmit(Request $request)
+    {
+        $check_attendance = Student_attendance::checkAlreadyAttendance($request->student_id, $request->class_id, $request->attendance_date);
+        if(!empty($check_attendance))
+        {
+            $attendance = $check_attendance;
+        }
+        else
+        {
+            $attendance = Student_attendance::make($request->except('created_by', 'attendance_type'));
+        }
+        $attendance->attendance_type = $request->attendance_type;
+        $attendance->created_by = Auth::user()->id;
+        $attendance->save();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Attendance Successfully Saved'
+        ]);
     }
 }

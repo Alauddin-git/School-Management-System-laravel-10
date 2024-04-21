@@ -356,4 +356,9 @@ class User extends Authenticatable
             return '';
         }
     }
+
+    static public function getAttendance($student_id, $class_id, $attendance_date)
+    {
+        return Student_attendance::checkAlreadyAttendance($student_id, $class_id, $attendance_date);
+    }
 }
