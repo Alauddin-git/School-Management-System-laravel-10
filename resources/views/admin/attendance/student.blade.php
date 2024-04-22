@@ -8,9 +8,6 @@
                     <div class="col-sm-6">
                         <h1>Student Attendance</h1>
                     </div>
-                    <div class="col-sm-6" style="text-align: right">
-                        <a href="{{ route('admin.examinations.exam.add.show') }}" class="btn btn-primary">Add New Exam</a>
-                    </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -36,72 +33,88 @@
                                     </select>
                                 </div>
                                 <div class="form-group  col-md-3">
-                                    <input type="date" class="form-control" id="getAttendanceDate" name="attendance_date" value="{{ Request('attendance_date') }}" required>
+                                    <input type="date" class="form-control" id="getAttendanceDate" name="attendance_date"
+                                        value="{{ Request('attendance_date') }}" required>
                                 </div>
                                 <div class="form-group col-md-3 d-flex align-items-center">
                                     <button class="btn btn-primary btn-outlook mr-2" type="submit">Search</button>
-                                    <a href="{{ route('admin.attendance.student') }}"
-                                        class="btn btn-success btn-outlook" role="button">Reset</a>
+                                    <a href="{{ route('admin.attendance.student') }}" class="btn btn-success btn-outlook"
+                                        role="button">Reset</a>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <!-- /.card-body -->    
+                    <!-- /.card-body -->
                 </div>
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Student List</h3>
+                @if (!empty($getStudentClass) && !empty($getStudentClass->count()))
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Student List</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Student Name</th>
+                                        <th>Attendance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($getStudentClass as $student)
+                                        @php
+                                            $attendance_type = '';
+                                            $getAttendance = $student->getAttendance(
+                                                $student->id,
+                                                Request('class_id'),
+                                                Request('attendance_date'),
+                                            );
+                                            if (!empty($getAttendance->attendance_type)) {
+                                                $attendance_type = $getAttendance->attendance_type;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $student->id }}</td>
+                                            <td>{{ $student->name }} {{ $student->last_name }}</td>
+                                            <td>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="{{ $student->id }}" class="saveAttendance" value="1"
+                                                        name="attendance{{ $student->id }}"
+                                                        @checked($attendance_type == 1)>Present</label>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="{{ $student->id }}" class="saveAttendance" value="2"
+                                                        name="attendance{{ $student->id }}"
+                                                        @checked($attendance_type == 2)>Late</label>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="{{ $student->id }}" class="saveAttendance" value="3"
+                                                        name="attendance{{ $student->id }}"
+                                                        @checked($attendance_type == 3)>Absent</label>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="{{ $student->id }}" class="saveAttendance" value="4"
+                                                        name="attendance{{ $student->id }}"
+                                                        @checked($attendance_type == 4)>Half Day</label>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Student ID</th>
-                                    <th>Student Name</th>
-                                    <th>Attendance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if(!empty($getStudentClass) && !empty($getStudentClass->count()))
-                                   @foreach ($getStudentClass as $student)
-                                   @php
-                                   $attendance_type = '';
-                                       $getAttendance = $student->getAttendance($student->id, Request('class_id'), Request('attendance_date'));
-                                       if(!empty($getAttendance->attendance_type))
-                                       {
-                                           $attendance_type = $getAttendance->attendance_type;
-                                       }
-                                   @endphp
-                                       <tr>
-                                        <td>{{ $student->id }}</td>
-                                        <td>{{ $student->name }} {{ $student->last_name }}</td>
-                                        <td>
-                                            <label style="margin-right: 10px"><input  type="radio" id="{{ $student->id }}" class="saveAttendance" value="1" name="attendance{{ $student->id }}" @checked($attendance_type == 1)>Present</label>
-                                            <label style="margin-right: 10px"><input  type="radio" id="{{ $student->id }}" class="saveAttendance" value="2" name="attendance{{ $student->id }}" @checked($attendance_type == 2)>Late</label>
-                                            <label style="margin-right: 10px"><input  type="radio" id="{{ $student->id }}" class="saveAttendance" value="3" name="attendance{{ $student->id }}" @checked($attendance_type == 3)>Absent</label>
-                                            <label style="margin-right: 10px"><input  type="radio" id="{{ $student->id }}" class="saveAttendance" value="4" name="attendance{{ $student->id }}" @checked($attendance_type == 4)>Half Day</label>
-                                        </td>
-                                       </tr>
-                                   @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->    
-                </div>
+                @endif
             </div><!-- /.container-fluid -->
         </section>
     </div>
 @endsection
 
- @section('script')
-     <script type="text/javascript">
+@section('script')
+    <script type="text/javascript">
         $('.saveAttendance').change(function(e) {
             e.preventDefault();
             var student_id = $(this).attr('id');
@@ -114,10 +127,10 @@
                 url: "{{ route('admin.attendance.student.save') }}",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    student_id : student_id,
-                    attendance_type : attendance_type,
-                    class_id : class_id,
-                    attendance_date : attendance_date
+                    student_id: student_id,
+                    attendance_type: attendance_type,
+                    class_id: class_id,
+                    attendance_date: attendance_date
                 },
                 dataType: "json",
                 success: function(response) {
@@ -128,5 +141,5 @@
                 }
             });
         });
-     </script>
- @endsection
+    </script>
+@endsection

@@ -41,4 +41,12 @@ class AttendanceController extends Controller
             'message' => 'Attendance Successfully Saved'
         ]);
     }
+
+    public function attendanceReport(Request $request)
+    {
+        $data['getClass'] = Classe::getClass();
+        $data['studentAtttendances'] = Student_attendance::getAtttendance();
+        $data['header_title'] = 'Attendance Report';
+        return view('admin.attendance.report', $data);
+    }
 }

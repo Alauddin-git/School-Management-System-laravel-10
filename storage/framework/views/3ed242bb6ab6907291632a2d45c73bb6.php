@@ -8,9 +8,6 @@
                     <div class="col-sm-6">
                         <h1>Student Attendance</h1>
                     </div>
-                    <div class="col-sm-6" style="text-align: right">
-                        <a href="<?php echo e(route('admin.examinations.exam.add.show')); ?>" class="btn btn-primary">Add New Exam</a>
-                    </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -37,72 +34,88 @@
                                     </select>
                                 </div>
                                 <div class="form-group  col-md-3">
-                                    <input type="date" class="form-control" id="getAttendanceDate" name="attendance_date" value="<?php echo e(Request('attendance_date')); ?>" required>
+                                    <input type="date" class="form-control" id="getAttendanceDate" name="attendance_date"
+                                        value="<?php echo e(Request('attendance_date')); ?>" required>
                                 </div>
                                 <div class="form-group col-md-3 d-flex align-items-center">
                                     <button class="btn btn-primary btn-outlook mr-2" type="submit">Search</button>
-                                    <a href="<?php echo e(route('admin.attendance.student')); ?>"
-                                        class="btn btn-success btn-outlook" role="button">Reset</a>
+                                    <a href="<?php echo e(route('admin.attendance.student')); ?>" class="btn btn-success btn-outlook"
+                                        role="button">Reset</a>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <!-- /.card-body -->    
+                    <!-- /.card-body -->
                 </div>
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Student List</h3>
+                <?php if(!empty($getStudentClass) && !empty($getStudentClass->count())): ?>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Student List</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Student Name</th>
+                                        <th>Attendance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
+                                            $attendance_type = '';
+                                            $getAttendance = $student->getAttendance(
+                                                $student->id,
+                                                Request('class_id'),
+                                                Request('attendance_date'),
+                                            );
+                                            if (!empty($getAttendance->attendance_type)) {
+                                                $attendance_type = $getAttendance->attendance_type;
+                                            }
+                                        ?>
+                                        <tr>
+                                            <td><?php echo e($student->id); ?></td>
+                                            <td><?php echo e($student->name); ?> <?php echo e($student->last_name); ?></td>
+                                            <td>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="<?php echo e($student->id); ?>" class="saveAttendance" value="1"
+                                                        name="attendance<?php echo e($student->id); ?>"
+                                                        <?php if($attendance_type == 1): echo 'checked'; endif; ?>>Present</label>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="<?php echo e($student->id); ?>" class="saveAttendance" value="2"
+                                                        name="attendance<?php echo e($student->id); ?>"
+                                                        <?php if($attendance_type == 2): echo 'checked'; endif; ?>>Late</label>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="<?php echo e($student->id); ?>" class="saveAttendance" value="3"
+                                                        name="attendance<?php echo e($student->id); ?>"
+                                                        <?php if($attendance_type == 3): echo 'checked'; endif; ?>>Absent</label>
+                                                <label style="margin-right: 10px"><input type="radio"
+                                                        id="<?php echo e($student->id); ?>" class="saveAttendance" value="4"
+                                                        name="attendance<?php echo e($student->id); ?>"
+                                                        <?php if($attendance_type == 4): echo 'checked'; endif; ?>>Half Day</label>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Student ID</th>
-                                    <th>Student Name</th>
-                                    <th>Attendance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if(!empty($getStudentClass) && !empty($getStudentClass->count())): ?>
-                                   <?php $__currentLoopData = $getStudentClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                   <?php
-                                   $attendance_type = '';
-                                       $getAttendance = $student->getAttendance($student->id, Request('class_id'), Request('attendance_date'));
-                                       if(!empty($getAttendance->attendance_type))
-                                       {
-                                           $attendance_type = $getAttendance->attendance_type;
-                                       }
-                                   ?>
-                                       <tr>
-                                        <td><?php echo e($student->id); ?></td>
-                                        <td><?php echo e($student->name); ?> <?php echo e($student->last_name); ?></td>
-                                        <td>
-                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="1" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 1): echo 'checked'; endif; ?>>Present</label>
-                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="2" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 2): echo 'checked'; endif; ?>>Late</label>
-                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="3" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 3): echo 'checked'; endif; ?>>Absent</label>
-                                            <label style="margin-right: 10px"><input  type="radio" id="<?php echo e($student->id); ?>" class="saveAttendance" value="4" name="attendance<?php echo e($student->id); ?>" <?php if($attendance_type == 4): echo 'checked'; endif; ?>>Half Day</label>
-                                        </td>
-                                       </tr>
-                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->    
-                </div>
+                <?php endif; ?>
             </div><!-- /.container-fluid -->
         </section>
     </div>
 <?php $__env->stopSection(); ?>
 
- <?php $__env->startSection('script'); ?>
-     <script type="text/javascript">
+<?php $__env->startSection('script'); ?>
+    <script type="text/javascript">
         $('.saveAttendance').change(function(e) {
             e.preventDefault();
             var student_id = $(this).attr('id');
@@ -115,10 +128,10 @@
                 url: "<?php echo e(route('admin.attendance.student.save')); ?>",
                 data: {
                     "_token": "<?php echo e(csrf_token()); ?>",
-                    student_id : student_id,
-                    attendance_type : attendance_type,
-                    class_id : class_id,
-                    attendance_date : attendance_date
+                    student_id: student_id,
+                    attendance_type: attendance_type,
+                    class_id: class_id,
+                    attendance_date: attendance_date
                 },
                 dataType: "json",
                 success: function(response) {
@@ -129,6 +142,7 @@
                 }
             });
         });
-     </script>
- <?php $__env->stopSection(); ?>
+    </script>
+<?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sms\resources\views/admin/attendance/student.blade.php ENDPATH**/ ?>

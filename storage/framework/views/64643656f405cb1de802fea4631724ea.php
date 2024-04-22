@@ -174,9 +174,9 @@
                     </li>
 
                     <li
-                        class="nav-item <?php echo e(in_array(Request::segment(3), ['student', 'exam_schedule', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
+                        class="nav-item <?php echo e(in_array(Request::segment(3), ['student', 'report', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
                         <a href="#"
-                            class="nav-link <?php echo e(in_array(Request::segment(3), ['student', 'exam_schedule', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
+                            class="nav-link <?php echo e(in_array(Request::segment(3), ['student', 'report', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Attendance
@@ -189,6 +189,13 @@
                                     class="nav-link <?php echo e(Request::segment(3) == 'student' ? 'active' : ''); ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Student Attendance</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.attendance.report')); ?>"
+                                    class="nav-link <?php echo e(Request::segment(3) == 'report' ? 'active' : ''); ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Attendance Report</p>
                                 </a>
                             </li>
                         </ul>
