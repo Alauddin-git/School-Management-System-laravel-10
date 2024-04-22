@@ -144,9 +144,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/examinations/marks_grade/delete/{marks_grade}', [ExaminationController::class, 'marks_grade_destroy'])->name('admin.examinations.marks_grade.delete');
 
     // student attendance
-    Route::get('admin/attendance/student', [AttendanceController::class, 'studentAttendance'])->name('admin.attendance.student');
+    Route::get('admin/attendance/student', [AttendanceController::class, 'studentAttendanceAdmin'])->name('admin.attendance.student');
     Route::post('admin/attendance/student/save', [AttendanceController::class, 'studentAttendanceSubmit'])->name('admin.attendance.student.save');
-    Route::get('admin/attendance/report', [AttendanceController::class, 'attendanceReport'])->name('admin.attendance.report');
+    Route::get('admin/attendance/report', [AttendanceController::class, 'attendanceReportAdmin'])->name('admin.attendance.report');
 
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');
@@ -179,6 +179,10 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::post('teacher/submit_marks_register', [ExaminationController::class, 'submit_marks_register_admin']);
     Route::post('teacher/single_submit_marks_register', [ExaminationController::class, 'single_submit_marks_register_admin']);
 
+        // student attendance
+        Route::get('teacher/attendance/student', [AttendanceController::class, 'studentAttendanceTeacher'])->name('teacher.attendance.student');
+        Route::post('teacher/attendance/student/save', [AttendanceController::class, 'studentAttendanceSubmit'])->name('teacher.attendance.student.save');
+        Route::get('teacher/attendance/report', [AttendanceController::class, 'attendanceReport'])->name('teacher.attendance.report');
 
     // account
     Route::get('teacher/account/edit', [UserController::class, 'myAccount'])->name('teacher.account.edit');

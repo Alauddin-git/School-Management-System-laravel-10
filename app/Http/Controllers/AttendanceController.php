@@ -6,11 +6,13 @@ use App\Models\User;
 use App\Models\admin\Classe;
 use Illuminate\Http\Request;
 use App\Models\Student_attendance;
+use App\Models\Assign_class_teacher;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    public function studentAttendance()
+    // admin side
+    public function studentAttendanceAdmin()
     {
         $data['getClass'] = Classe::getClass();
 
@@ -42,11 +44,22 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function attendanceReport(Request $request)
+    public function attendanceReportAdmin(Request $request)
     {
         $data['getClass'] = Classe::getClass();
         $data['studentAtttendances'] = Student_attendance::getAtttendance();
         $data['header_title'] = 'Attendance Report';
         return view('admin.attendance.report', $data);
+    }
+
+    public function studentAttendanceTeacher()
+    {
+        $data['getClass'] = Assign_class_teacher::getMyClassSubjectGroup(Auth::user()->id);  
+        if(!empty(Request('class_id')) && !empty(Request('attendance_date')))
+        {
+            $data['getStudentClass'] = User::getStudentClass(Request('class_id'));
+        }
+        $data['header_title'] = 'Student Attendance';
+        return view('teacher.attendance.student', $data);
     }
 }

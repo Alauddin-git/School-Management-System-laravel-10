@@ -174,9 +174,9 @@
                     </li>
 
                     <li
-                        class="nav-item <?php echo e(in_array(Request::segment(3), ['student', 'report', 'assign-subject', 'marks_register', 'assign_class_teacher', 'class_timetable']) ? 'menu-is-opening menu-open' : ''); ?>">
+                        class="nav-item <?php echo e(in_array(Request::segment(3), ['student', 'report']) ? 'menu-is-opening menu-open' : ''); ?>">
                         <a href="#"
-                            class="nav-link <?php echo e(in_array(Request::segment(3), ['student', 'report', 'marks_register', 'assign-subject', 'assign_class_teacher', 'class_timetable']) ? 'active' : ''); ?>">
+                            class="nav-link <?php echo e(in_array(Request::segment(3), ['student', 'report']) ? 'active' : ''); ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Attendance
@@ -273,7 +273,33 @@
                             </p>
                         </a>
                     </li>
-
+                    <li
+                    class="nav-item <?php echo e(in_array(Request::segment(3), ['student', 'report']) ? 'menu-is-opening menu-open' : ''); ?>">
+                    <a href="#"
+                        class="nav-link <?php echo e(in_array(Request::segment(3), ['student', 'report']) ? 'active' : ''); ?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Attendance
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('teacher.attendance.student')); ?>"
+                                class="nav-link <?php echo e(Request::segment(3) == 'student' ? 'active' : ''); ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Student Attendance</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('teacher.attendance.report')); ?>"
+                                class="nav-link <?php echo e(Request::segment(3) == 'report' ? 'active' : ''); ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Attendance Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                     <li class="nav-item">
                         <a href="<?php echo e(route('teacher.change_password.show')); ?>"
                             class="nav-link <?php if(Request::segment(2) == 'change_password'): ?> active <?php endif; ?>">
