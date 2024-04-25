@@ -29,7 +29,6 @@ use App\Http\Controllers\admin\Class_subjectController;
 |
 */
 
-
 Route::get('/', [AuthController::class, 'login'])->name('login.show');
 Route::post('/login', [AuthController::class, 'AuthLogin'])->name('login.perform');
 Route::get('/logout', [AuthController::class, 'AuthLogout'])->name('logout');
@@ -182,7 +181,7 @@ Route::group(['middleware' => 'teacher'], function () {
         // student attendance
         Route::get('teacher/attendance/student', [AttendanceController::class, 'studentAttendanceTeacher'])->name('teacher.attendance.student');
         Route::post('teacher/attendance/student/save', [AttendanceController::class, 'studentAttendanceSubmit'])->name('teacher.attendance.student.save');
-        Route::get('teacher/attendance/report', [AttendanceController::class, 'attendanceReport'])->name('teacher.attendance.report');
+        Route::get('teacher/attendance/report', [AttendanceController::class, 'attendanceReportTeacher'])->name('teacher.attendance.report');
 
     // account
     Route::get('teacher/account/edit', [UserController::class, 'myAccount'])->name('teacher.account.edit');
