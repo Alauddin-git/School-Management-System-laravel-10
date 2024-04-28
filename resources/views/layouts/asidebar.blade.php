@@ -200,6 +200,26 @@
                             </li>
                         </ul>
                     </li>
+                    <li
+                    class="nav-item {{ in_array(Request::segment(3), ['notice_board', 'report']) ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ in_array(Request::segment(3), ['notice_board', 'report']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Communicate
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.commmunicate.notice_board') }}"
+                                class="nav-link {{ Request::segment(3) == 'notice_board' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Notice Board</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.account.edit') }}"
                             class="nav-link @if (Request::segment(2) == 'account') active @endif">

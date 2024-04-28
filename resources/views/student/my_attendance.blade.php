@@ -24,7 +24,7 @@
                         <form action="" method="get">
                             <form action="" method="get">
                                 <div class="row" style="display: flex; flex-wrap: wrap; align-items: center;">
-                                    <div class="form-group col-md-2" style="margin-right: 10px; display: flex;">
+                                    <div class="form-group col-md-3" style="margin-right: 10px; display: flex;">
                                         <select class="form-control" name="class_id">
                                             <option value="">Select Class</option>
                                             @foreach ($my_attendances as $class)
@@ -34,7 +34,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2" style="margin-right: 10px; display: flex;">
+                                    <div class="form-group col-md-4" style="margin-right: 10px; display: flex;">
                                         <select class="form-control" name="attendance_type">
                                             <option value="">Choose Attendance Type</option>
                                             <option @selected(Request('attendance_type') == 1) value="1">Present</option>
@@ -43,10 +43,15 @@
                                             <option @selected(Request('attendance_type') == 4) value="4">Half Day</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3" style="margin-right: 50px; display: flex; align-items: center;">
-                                        <label for="attendance_date" style="margin-right: 10px; white-space: nowrap;">Attendance Date:</label>
-                                        <input type="date" class="form-control" name="attendance_date" id="attendance_date"
-                                               value="{{ Request('attendance_date') }}" style="flex-grow: 1;">
+                                    <div class="form-group col-md-3" style="display: flex; align-items: center; margin-right: 90px;">
+                                        <label for="start_attendance_date" style="margin-right: 10px; white-space: nowrap;">Start Attendance Date:</label>
+                                        <input type="date" class="form-control" id="start_attendance_date" name="start_attendance_date" 
+                                               value="{{ Request('start_attendance_date') }}" style="flex-grow: 1;">
+                                    </div>
+                                    <div class="form-group col-md-3" style="display: flex; align-items: center; margin-right: 90px;">
+                                        <label for="end_attendance_date" style="margin-right: 10px; white-space: nowrap;">End Attendance Date:</label>
+                                        <input type="date" class="form-control" id="end_attendance_date" name="end_attendance_date" 
+                                               value="{{ Request('end_attendance_date') }}" style="flex-grow: 1;">
                                     </div>
                                     <div class="form-group col-md-auto" style="display: flex;">
                                         <button class="btn btn-primary" type="submit">Search</button>

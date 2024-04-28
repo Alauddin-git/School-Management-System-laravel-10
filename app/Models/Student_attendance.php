@@ -36,14 +36,17 @@ class Student_attendance extends Model
         if (!empty(Request('student_name'))) {
             $return = $return->where('student.name', Request('student_name'));
         }
-        if (!empty(Request('attendance_date'))) {
-            $return = $return->where('student_attendances.attendance_date', Request('attendance_date'));
+        if (!empty(Request('start_attendance_date'))) {
+            $return = $return->where('student_attendances.attendance_date','>=', Request('start_attendance_date'));
+        }
+        if (!empty(Request('end_attendance_date'))) {
+            $return = $return->where('student_attendances.attendance_date','<=', Request('end_attendance_date'));
         }
         if (!empty(Request('attendance_type'))) {
             $return = $return->where('student_attendances.attendance_type', Request('attendance_type'));
         }
         return $return->orderBy('student_attendances.id', 'desc')
-            ->paginate(2);
+            ->paginate(5);
     }
 
 
@@ -58,14 +61,17 @@ class Student_attendance extends Model
             if (!empty(Request('class_id'))) {
                 $return = $return->where('student_attendances.class_id', Request('class_id'));
             }
-            if (!empty(Request('attendance_type'))) {
-                $return = $return->where('student_attendances.attendance_type', Request('attendance_type'));
+            if (!empty(Request('start_attendance_date'))) {
+                $return = $return->where('student_attendances.attendance_date','>=', Request('start_attendance_date'));
+            }
+            if (!empty(Request('end_attendance_date'))) {
+                $return = $return->where('student_attendances.attendance_date','<=', Request('end_attendance_date'));
             }
             if (!empty(Request('attendance_date'))) {
                 $return = $return->where('student_attendances.attendance_date', Request('attendance_date'));
             }
             return $return->orderBy('student_attendances.id', 'desc')
-                ->paginate(2);
+                ->paginate(5);
         } else {
             return '';
         }
@@ -79,8 +85,11 @@ class Student_attendance extends Model
                     if (!empty(Request('class_id'))) {
                         $return = $return->where('student_attendances.class_id', Request('class_id'));
                     }
-                    if (!empty(Request('attendance_date'))) {
-                        $return = $return->where('student_attendances.attendance_date', Request('attendance_date'));
+                    if (!empty(Request('start_attendance_date'))) { 
+                        $return = $return->where('student_attendances.attendance_date','>=', Request('start_attendance_date'));
+                    }
+                    if (!empty(Request('end_attendance_date'))) {  
+                        $return = $return->where('student_attendances.attendance_date','<=', Request('end_attendance_date'));
                     }
                     if (!empty(Request('attendance_type'))) {
                         $return = $return->where('student_attendances.attendance_type', Request('attendance_type'));
@@ -88,5 +97,14 @@ class Student_attendance extends Model
                     return $return->orderBy('student_attendances.id', 'desc')
                         ->paginate(5);
 
+    }
+
+    static public function myStudentClass($student_id)
+    {
+        return self::select('student_attendances.*', 'classes.name as class_name')
+                    ->join('classes', 'classes.id', 'student_attendances.class_id')
+                    ->where('student_attendances.student_id', $student_id)
+                    ->groupBy('student_attendances.class_id')
+                    ->get();
     }
 }

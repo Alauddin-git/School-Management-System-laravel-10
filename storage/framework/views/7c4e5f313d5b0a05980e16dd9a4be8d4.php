@@ -5,8 +5,8 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>My Student Attendance(<span style="color: blue">Total: <?php echo e($my_attendances->total()); ?></span>) </h1>
+                    <div class="col-sm-12">
+                        <h1>My Student Attendance(Name- <span style="color: rgb(48, 168, 32);"><?php echo e($my_student->name); ?> <?php echo e($my_student->last_name); ?></span>, Total Attendance: <span style="color: rgb(48, 168, 32);"><?php echo e($my_attendances->total()); ?></span> )</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -24,8 +24,18 @@
                         <form action="" method="get">
                             <form action="" method="get">
                                 <div class="row" style="display: flex; flex-wrap: wrap; align-items: center;">
-                                    
-                                    <div class="form-group col-md-2" style="margin-right: 10px; display: flex;">
+                                    <div class="form-group col-md-2" style="margin-right: 1px; display: flex;">
+                                        <select class="form-control" name="class_id">
+                                            <option value="">Select Class</option>
+                                            <?php $__currentLoopData = $get_class; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($class->class_id); ?>" <?php echo e(Request('class_id') == $class->id ? 'selected' : ''); ?>>
+                                                    <?php echo e($class->class_name); ?>
+
+                                                </option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2" style="margin-right: 1px; display: flex;">
                                         <select class="form-control" name="attendance_type">
                                             <option value="">Choose Attendance Type</option>
                                             <option <?php if(Request('attendance_type') == 1): echo 'selected'; endif; ?> value="1">Present</option>
@@ -35,9 +45,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3" style="margin-right: 50px; display: flex; align-items: center;">
-                                        <label for="attendance_date" style="margin-right: 10px; white-space: nowrap;">Attendance Date:</label>
-                                        <input type="date" class="form-control" name="attendance_date" id="attendance_date"
-                                               value="<?php echo e(Request('attendance_date')); ?>" style="flex-grow: 1;">
+                                        <label for="start_attendance_date" style="margin-right: 1px; white-space: ;">Start Attendance Date:</label>
+                                        <input type="date" class="form-control" name="start_attendance_date" id="start_attendance_date"
+                                               value="<?php echo e(Request('start_attendance_date')); ?>" style="flex-grow: 1;">
+                                    </div>
+                                    <div class="form-group col-md-3" style="margin-right: 1px; display: flex; align-items: center;">
+                                        <label for="end_attendance_date" style="margin-right: 1px; white-space: ;">End Attendance Date:</label>
+                                        <input type="date" class="form-control" name="end_attendance_date" id="end_attendance_date"
+                                               value="<?php echo e(Request('end_attendance_date')); ?>" style="flex-grow: 1;">
                                     </div>
                                     <div class="form-group col-md-auto" style="display: flex;">
                                         <button class="btn btn-primary" type="submit">Search</button>
@@ -66,10 +81,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                <?php if(!empty($my_attendances)): ?>
+                                    <?php $__empty_1 = true; $__currentLoopData = $my_attendances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $my_attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                        <tr>
+                                            <td><?php echo e($my_attendance->class_name); ?></td>
+                                            </td>
+                                            <td>
+                                                <?php if($my_attendance->attendance_type == 1): ?>
+                                                    Present
+                                                <?php elseif($my_attendance->attendance_type == 2): ?>
+                                                    Late
+                                                <?php elseif($my_attendance->attendance_type == 3): ?>
+                                                    Absent
+                                                <?php elseif($my_attendance->attendance_type == 4): ?>
+                                                    Half Day
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><?php echo e(date('d-m-Y', strtotime($my_attendance->attendance_date))); ?></td>
+                                            <td><?php echo e(date('d-m-Y H:i A', strtotime($my_attendance->created_at))); ?></td>
+                                        </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                        <tr>
+                                            <td colspan="100%">Record Not found</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="100%">Record Not found</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
-                        
+                        <?php if(!empty($my_attendances)): ?>
+                        <div style="padding: 10px; float:right">
+                            <?php echo $my_attendances->appends(Request::except('page'))->links(); ?>
+
+                        </div>
+                        <?php endif; ?>
                     </div>
                     <!-- /.card-body -->
                 </div>

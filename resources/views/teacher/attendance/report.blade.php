@@ -23,30 +23,26 @@
                     <div class="card-body">
                         <form action="" method="get">
                             <div class="row p-1">
-                                <div class="form-group  col-md-2">
+                                <div class="form-group col-md-2">
                                     <input type="text" class="form-control" name="student_id" placeholder="Student Id"
                                         value="{{ Request('student_id') }}">
                                 </div>
-                                <div class="form-group  col-md-2">
-                                    <input type="text" class="form-control" name="student_name" placeholder="Student Name"
-                                        value="{{ Request('student_name') }}">
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="student_name"
+                                        placeholder="Student Name" value="{{ Request('student_name') }}">
                                 </div>
-                                <div class="form-group  col-md-2">
+                                <div class="form-group col-md-3">
                                     <select class="form-control" name="class_id">
                                         <option value="">Select Class</option>
                                         @foreach ($getClass as $class)
-                                            <option value="{{ $class->id }}"
-                                                {{ Request('class_id') == $class->classe_id ? 'selected' : '' }}>
+                                            <option value="{{ $class->class_id }}"
+                                                {{ Request('class_id') == $class->class_id ? 'selected' : '' }}>
                                                 {{ $class->class_name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group  col-md-2">
-                                    <input type="date" class="form-control" name="attendance_date"
-                                        value="{{ Request('attendance_date') }}">
-                                </div>
-                                <div class="form-group  col-md-2">
+                                <div class="form-group col-md-3">
                                     <select class="form-control" name="attendance_type">
                                         <option value="">Choose Attendance Type</option>
                                         <option @selected(Request('attendance_type') == 1) value="1">Present</option>
@@ -55,12 +51,23 @@
                                         <option @selected(Request('attendance_type') == 4) value="4">Half Day</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3 d-flex align-items-center">
-                                    <button class="btn btn-primary btn-outlook mr-2" type="submit">Search</button>
-                                    <a href="{{ route('admin.attendance.report') }}" class="btn btn-success btn-outlook"
-                                        role="button">Reset</a>
-                                </div>
                             </div>
+                            <div class="row p-1" style="display: flex; align-items: center; width: 100%;">
+                                <div class="form-group col-md-3" style="display: flex; align-items: center; margin-right: 90px;">
+                                    <label for="start_attendance_date" style="margin-right: 10px;">Start Attendance Date:</label>
+                                    <input type="date" class="form-control" id="start_attendance_date" name="start_attendance_date" 
+                                           value="{{ Request('start_attendance_date') }}" style="flex-grow: 1;">
+                                </div>
+                                <div class="form-group col-md-3" style="display: flex; align-items: center; margin-right: 90px;">
+                                    <label for="end_attendance_date" style="margin-right: 10px;">End Attendance Date:</label>
+                                    <input type="date" class="form-control" id="end_attendance_date" name="end_attendance_date" 
+                                           value="{{ Request('end_attendance_date') }}" style="flex-grow: 1;">
+                                </div>
+                                <div class="form-group col-md-3 d-flex align-items-center" style="display: flex; margin-right: 10px;">
+                                    <button class="btn btn-primary btn-outlook mr-2" type="submit">Search</button>
+                                    <a href="{{ route('teacher.attendance.report') }}" class="btn btn-success btn-outlook" role="button">Reset</a>
+                                </div>
+                            </div> 
                         </form>
                     </div>
                     <!-- /.card-body -->

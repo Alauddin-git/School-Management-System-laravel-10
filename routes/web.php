@@ -17,6 +17,7 @@ use App\Http\Controllers\admin\SubjectController;
 use App\Http\Controllers\Class_TimeTableController;
 use App\Http\Controllers\AssignClassTeacherController;
 use App\Http\Controllers\admin\Class_subjectController;
+use App\Http\Controllers\CommunicateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,6 +147,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/attendance/student', [AttendanceController::class, 'studentAttendanceAdmin'])->name('admin.attendance.student');
     Route::post('admin/attendance/student/save', [AttendanceController::class, 'studentAttendanceSubmit'])->name('admin.attendance.student.save');
     Route::get('admin/attendance/report', [AttendanceController::class, 'attendanceReportAdmin'])->name('admin.attendance.report');
+
+    // communicate
+    Route::get('admin/communicate/notice_board', [CommunicateController::class, 'noticeBoard'])->name('admin.communicate.notice_board');
 
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');

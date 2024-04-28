@@ -23,31 +23,27 @@
                     <div class="card-body">
                         <form action="" method="get">
                             <div class="row p-1">
-                                <div class="form-group  col-md-2">
+                                <div class="form-group col-md-2">
                                     <input type="text" class="form-control" name="student_id" placeholder="Student Id"
                                         value="<?php echo e(Request('student_id')); ?>">
                                 </div>
-                                <div class="form-group  col-md-2">
-                                    <input type="text" class="form-control" name="student_name" placeholder="Student Name"
-                                        value="<?php echo e(Request('student_name')); ?>">
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="student_name"
+                                        placeholder="Student Name" value="<?php echo e(Request('student_name')); ?>">
                                 </div>
-                                <div class="form-group  col-md-2">
+                                <div class="form-group col-md-3">
                                     <select class="form-control" name="class_id">
                                         <option value="">Select Class</option>
                                         <?php $__currentLoopData = $getClass; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($class->id); ?>"
-                                                <?php echo e(Request('class_id') == $class->classe_id ? 'selected' : ''); ?>>
+                                            <option value="<?php echo e($class->class_id); ?>"
+                                                <?php echo e(Request('class_id') == $class->class_id ? 'selected' : ''); ?>>
                                                 <?php echo e($class->class_name); ?>
 
                                             </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
-                                <div class="form-group  col-md-2">
-                                    <input type="date" class="form-control" name="attendance_date"
-                                        value="<?php echo e(Request('attendance_date')); ?>">
-                                </div>
-                                <div class="form-group  col-md-2">
+                                <div class="form-group col-md-3">
                                     <select class="form-control" name="attendance_type">
                                         <option value="">Choose Attendance Type</option>
                                         <option <?php if(Request('attendance_type') == 1): echo 'selected'; endif; ?> value="1">Present</option>
@@ -56,10 +52,21 @@
                                         <option <?php if(Request('attendance_type') == 4): echo 'selected'; endif; ?> value="4">Half Day</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3 d-flex align-items-center">
+                            </div>
+                            <div class="row p-1" style="display: flex; align-items: center; width: 100%;">
+                                <div class="form-group col-md-3" style="display: flex; align-items: center; margin-right: 90px;">
+                                    <label for="start_attendance_date" style="margin-right: 10px;">Start Attendance Date:</label>
+                                    <input type="date" class="form-control" id="start_attendance_date" name="start_attendance_date" 
+                                           value="<?php echo e(Request('start_attendance_date')); ?>" style="flex-grow: 1;">
+                                </div>
+                                <div class="form-group col-md-3" style="display: flex; align-items: center; margin-right: 90px;">
+                                    <label for="end_attendance_date" style="margin-right: 10px;">End Attendance Date:</label>
+                                    <input type="date" class="form-control" id="end_attendance_date" name="end_attendance_date" 
+                                           value="<?php echo e(Request('end_attendance_date')); ?>" style="flex-grow: 1;">
+                                </div>
+                                <div class="form-group col-md-3 d-flex align-items-center" style="display: flex; margin-right: 10px;">
                                     <button class="btn btn-primary btn-outlook mr-2" type="submit">Search</button>
-                                    <a href="<?php echo e(route('admin.attendance.report')); ?>" class="btn btn-success btn-outlook"
-                                        role="button">Reset</a>
+                                    <a href="<?php echo e(route('teacher.attendance.report')); ?>" class="btn btn-success btn-outlook" role="button">Reset</a>
                                 </div>
                             </div>
                         </form>

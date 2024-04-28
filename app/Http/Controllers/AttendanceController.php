@@ -63,6 +63,7 @@ class AttendanceController extends Controller
         return view('teacher.attendance.student', $data);
     }
 
+    // teacher
     public function attendanceReportTeacher(Request $request)
     {
         $getClass = Assign_class_teacher::getMyClassSubjectGroup(Auth::user()->id);  
@@ -89,6 +90,8 @@ class AttendanceController extends Controller
     public function myAttendanceParent($student_id)
     {
         $data['my_student']  = User::find($student_id);
+        $data['get_class'] = Student_attendance::myStudentClass($student_id);
+        $data['my_attendances'] = Student_attendance::myAttendance($student_id);
         $data['header_title'] = 'My Student Attendance';
         return view('parent.myStudent_attendance', $data); 
     }

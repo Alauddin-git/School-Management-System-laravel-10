@@ -5,8 +5,8 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>My Student Attendance(<span style="color: blue">Total: {{ $my_attendances->total() }}</span>) </h1>
+                    <div class="col-sm-12">
+                        <h1>My Student Attendance(Name- <span style="color: rgb(48, 168, 32);">{{ $my_student->name }} {{ $my_student->last_name }}</span>, Total Attendance: <span style="color: rgb(48, 168, 32);">{{ $my_attendances->total() }}</span> )</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -24,17 +24,17 @@
                         <form action="" method="get">
                             <form action="" method="get">
                                 <div class="row" style="display: flex; flex-wrap: wrap; align-items: center;">
-                                    {{-- <div class="form-group col-md-2" style="margin-right: 10px; display: flex;">
+                                    <div class="form-group col-md-2" style="margin-right: 1px; display: flex;">
                                         <select class="form-control" name="class_id">
                                             <option value="">Select Class</option>
-                                            @foreach ($my_attendances as $class)
+                                            @foreach ($get_class as $class)
                                                 <option value="{{ $class->class_id }}" {{ Request('class_id') == $class->id ? 'selected' : '' }}>
                                                     {{ $class->class_name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div> --}}
-                                    <div class="form-group col-md-2" style="margin-right: 10px; display: flex;">
+                                    </div>
+                                    <div class="form-group col-md-2" style="margin-right: 1px; display: flex;">
                                         <select class="form-control" name="attendance_type">
                                             <option value="">Choose Attendance Type</option>
                                             <option @selected(Request('attendance_type') == 1) value="1">Present</option>
@@ -44,9 +44,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3" style="margin-right: 50px; display: flex; align-items: center;">
-                                        <label for="attendance_date" style="margin-right: 10px; white-space: nowrap;">Attendance Date:</label>
-                                        <input type="date" class="form-control" name="attendance_date" id="attendance_date"
-                                               value="{{ Request('attendance_date') }}" style="flex-grow: 1;">
+                                        <label for="start_attendance_date" style="margin-right: 1px; white-space: ;">Start Attendance Date:</label>
+                                        <input type="date" class="form-control" name="start_attendance_date" id="start_attendance_date"
+                                               value="{{ Request('start_attendance_date') }}" style="flex-grow: 1;">
+                                    </div>
+                                    <div class="form-group col-md-3" style="margin-right: 1px; display: flex; align-items: center;">
+                                        <label for="end_attendance_date" style="margin-right: 1px; white-space: ;">End Attendance Date:</label>
+                                        <input type="date" class="form-control" name="end_attendance_date" id="end_attendance_date"
+                                               value="{{ Request('end_attendance_date') }}" style="flex-grow: 1;">
                                     </div>
                                     <div class="form-group col-md-auto" style="display: flex;">
                                         <button class="btn btn-primary" type="submit">Search</button>
@@ -75,7 +80,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @if (!empty($my_attendances))
+                                @if (!empty($my_attendances))
                                     @forelse ($my_attendances as $my_attendance)
                                         <tr>
                                             <td>{{ $my_attendance->class_name }}</td>
@@ -103,14 +108,14 @@
                                     <tr>
                                         <td colspan="100%">Record Not found</td>
                                     </tr>
-                                @endif --}}
+                                @endif
                             </tbody>
                         </table>
-                        {{-- @if (!empty($my_attendances))
+                        @if (!empty($my_attendances))
                         <div style="padding: 10px; float:right">
                             {!! $my_attendances->appends(Request::except('page'))->links() !!}
                         </div>
-                        @endif --}}
+                        @endif
                     </div>
                     <!-- /.card-body -->
                 </div>
