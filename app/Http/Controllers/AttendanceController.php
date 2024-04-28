@@ -84,4 +84,12 @@ class AttendanceController extends Controller
         $data['header_title'] = 'Attendance Report';
         return view('student.my_attendance', $data);
     }
+
+    // parent side
+    public function myAttendanceParent($student_id)
+    {
+        $data['my_student']  = User::find($student_id);
+        $data['header_title'] = 'My Student Attendance';
+        return view('parent.myStudent_attendance', $data); 
+    }
 }

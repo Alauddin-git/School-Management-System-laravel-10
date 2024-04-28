@@ -87,6 +87,7 @@
                                                  <a class="btn btn-primary btn-sm" href="{{ route('parent.my_student.exam_timetable', $student->id) }}">Exam Timetable</a>
                                                  <a class="btn btn-warning btn-sm" href="{{ route('parent.my_student.exam_result', $student->id) }}">Exam Result</a>
                                                  <a class="btn btn-secondary btn-sm" href="{{ route('parent.my_student.calendar', $student->id) }}">Calendar</a>
+                                                 <a class="btn btn-info btn-sm" href="{{ route('parent.my_student.attendance', $student->id) }}">Attendance</a>
                                             </td>
                                         </tr>
                                     @endforeach

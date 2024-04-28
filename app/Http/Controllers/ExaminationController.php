@@ -485,4 +485,5 @@ class ExaminationController extends Controller
         $data['header_title'] = 'My Exam Result';
         return view('parent.myStudent_exam_result', $data); 
     }
+
 }
