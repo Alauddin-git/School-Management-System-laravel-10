@@ -90,9 +90,9 @@
                             </thead>
                             @forelse ($studentAtttendances as $studentAtttendance)
                                 <tr>
-                                    <td>{{ $studentAtttendance->class_name }}</td>
                                     <td>{{ $studentAtttendance->student_id }}</td>
                                     <td>{{ $studentAtttendance->student_name }} {{ $studentAtttendance->student_last_name }}
+                                    <td>{{ $studentAtttendance->class_name }}</td>
                                     </td>
                                     <td>
                                         @if ($studentAtttendance->attendance_type == 1)

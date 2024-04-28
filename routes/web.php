@@ -213,6 +213,9 @@ Route::group(['middleware' => 'student'], function () {
     // exam result
     Route::get('student/my_exam_result', [ExaminationController::class, 'myExamResult'])->name('student.my_exam_result');
 
+    // attendance
+    Route::get('student/my_attendance', [AttendanceController::class, 'myAttendaceStudent'])->name('student.my_attendance');
+
     // password_change
     Route::get('student/change_password', [UserController::class, 'change_passwordShow'])->name('student.change_password.show');
     Route::post('student/change_password', [UserController::class, 'change_passwordUpdate']);

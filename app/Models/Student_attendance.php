@@ -33,6 +33,9 @@ class Student_attendance extends Model
         if (!empty(Request('student_id'))) {
             $return = $return->where('student_attendances.student_id', Request('student_id'));
         }
+        if (!empty(Request('student_name'))) {
+            $return = $return->where('student.name', Request('student_name'));
+        }
         if (!empty(Request('attendance_date'))) {
             $return = $return->where('student_attendances.attendance_date', Request('attendance_date'));
         }
@@ -55,19 +58,35 @@ class Student_attendance extends Model
             if (!empty(Request('class_id'))) {
                 $return = $return->where('student_attendances.class_id', Request('class_id'));
             }
-            if (!empty(Request('student_id'))) {
-                $return = $return->where('student_attendances.student_id', Request('student_id'));
+            if (!empty(Request('attendance_type'))) {
+                $return = $return->where('student_attendances.attendance_type', Request('attendance_type'));
             }
             if (!empty(Request('attendance_date'))) {
                 $return = $return->where('student_attendances.attendance_date', Request('attendance_date'));
-            }
-            if (!empty(Request('attendance_type'))) {
-                $return = $return->where('student_attendances.attendance_type', Request('attendance_type'));
             }
             return $return->orderBy('student_attendances.id', 'desc')
                 ->paginate(2);
         } else {
             return '';
         }
+    }
+
+    static public function myAttendance($student_id)
+    {
+        $return = self::select('student_attendances.*', 'classes.name as class_name')
+                    ->join('classes', 'classes.id', 'student_attendances.class_id' )
+                    ->where('student_attendances.student_id', $student_id);
+                    if (!empty(Request('class_id'))) {
+                        $return = $return->where('student_attendances.class_id', Request('class_id'));
+                    }
+                    if (!empty(Request('attendance_date'))) {
+                        $return = $return->where('student_attendances.attendance_date', Request('attendance_date'));
+                    }
+                    if (!empty(Request('attendance_type'))) {
+                        $return = $return->where('student_attendances.attendance_type', Request('attendance_type'));
+                    }
+                    return $return->orderBy('student_attendances.id', 'desc')
+                        ->paginate(5);
+
     }
 }

@@ -91,10 +91,10 @@
                             </thead>
                             <?php $__empty_1 = true; $__currentLoopData = $studentAtttendances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $studentAtttendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
-                                    <td><?php echo e($studentAtttendance->class_name); ?></td>
                                     <td><?php echo e($studentAtttendance->student_id); ?></td>
                                     <td><?php echo e($studentAtttendance->student_name); ?> <?php echo e($studentAtttendance->student_last_name); ?>
 
+                                    <td><?php echo e($studentAtttendance->class_name); ?></td>
                                     </td>
                                     <td>
                                         <?php if($studentAtttendance->attendance_type == 1): ?>

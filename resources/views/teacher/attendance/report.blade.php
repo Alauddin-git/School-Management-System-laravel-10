@@ -72,7 +72,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Student List</h3>
+                        <h3 class="card-title">Attendance List</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -88,6 +88,7 @@
                                     <th>Created Date</th>
                                 </tr>
                             </thead>
+                            <tbody>
                             @if (!empty($studentAtttendances))
                             @forelse ($studentAtttendances as $studentAtttendance)
                                 <tr>
@@ -120,7 +121,6 @@
                                 <td colspan="100%">Record Not found</td>
                             </tr>             
                             @endif
-                            <tbody>
                             </tbody>
                         </table>
                         @if (!empty($studentAtttendances))

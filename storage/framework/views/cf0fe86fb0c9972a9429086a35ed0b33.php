@@ -73,7 +73,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Student List</h3>
+                        <h3 class="card-title">Attendance List</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -89,6 +89,7 @@
                                     <th>Created Date</th>
                                 </tr>
                             </thead>
+                            <tbody>
                             <?php if(!empty($studentAtttendances)): ?>
                             <?php $__empty_1 = true; $__currentLoopData = $studentAtttendances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $studentAtttendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
@@ -122,7 +123,6 @@
                                 <td colspan="100%">Record Not found</td>
                             </tr>             
                             <?php endif; ?>
-                            <tbody>
                             </tbody>
                         </table>
                         <?php if(!empty($studentAtttendances)): ?>
