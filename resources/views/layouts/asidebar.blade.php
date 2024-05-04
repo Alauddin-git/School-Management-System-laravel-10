@@ -212,7 +212,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.commmunicate.notice_board') }}"
+                            <a href="{{ route('admin.communicate.notice_board') }}"
                                 class="nav-link {{ Request::segment(3) == 'notice_board' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Notice Board</p>

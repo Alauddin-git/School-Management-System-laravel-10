@@ -6,10 +6,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Admin List (Total: {{ $admins->total() }})</h1>
+                        <h1>Notice Board</h1>
                     </div>
                     <div class="col-sm-6" style="text-align: right">
-                        <a href="{{ route('admin.admin.add.show') }}" class="btn btn-primary">Add New Admin</a>
+                        <a href="{{ route('admin.communicate.notice_board.add') }}" class="btn btn-primary">Add New Notice</a>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -54,7 +54,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Admin list</h3>
+                                <h3 class="card-title">Notice Board List</h3>
                                 <div class="card-tools">
                                 </div>
                             </div>
@@ -64,27 +64,29 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
+                                            <th>Title</th>
+                                            <th>Notice Board</th>
+                                            <th>Publish Date</th>
+                                            <th>Message To</th>
                                             <th>Created Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($admins as $admin)
+                                        @forelse ($get_notices as $get_notice)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $admin->name }}</td>
-                                                <td>{{ $admin->email }}</td>
-                                                <td>{{ date('d-m-Y h:i A', strtotime($admin->created_at)) }}</td>
-                                                <td>
-                                                    <a href="{{ url('admin/admin/edit/' . $admin->id) }}"
-                                                        class="btn btn-primary">Edit</a>
-                                                    <a href="{{ url('admin/admin/delete/' . $admin->id) }}"
-                                                        class="btn btn-danger">Delete</a>
-                                                </td>
+                                                <td>{{ $get_notice->id }}</td>
+                                                <td>{{ $get_notice->title }}</td>
+                                                <td>{{ date('d-m-Y', strtotime($get_notice->notice_date)) }}</td>
+                                                <td>{{ date('d-m-Y', strtotime($get_notice->publish_date)) }}</td>
+                                                <td>{{ $get_notice->createdby }}</td>
+                                                <td>{{ date('d-m-Y', strtotime($get_notice->created_at)) }}</td>
                                             </tr>
-                                        @endforeach --}}
+                                        @empty
+                                            <tr>
+                                                <td colspan="100%">Record Not Found</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{-- <div style="padding: 10px; float:right">

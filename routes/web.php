@@ -150,6 +150,8 @@ Route::group(['middleware' => 'admin'], function () {
 
     // communicate
     Route::get('admin/communicate/notice_board', [CommunicateController::class, 'noticeBoard'])->name('admin.communicate.notice_board');
+    Route::get('admin/communicate/notice_board/add', [CommunicateController::class, 'addNoticeBoard'])->name('admin.communicate.notice_board.add');
+    Route::post('admin/communicate/notice_board/add', [CommunicateController::class, 'insertNoticeBoard'])->name('admin.communicate.notice_board.add');
 
     // account
     Route::get('admin/account/edit', [UserController::class, 'myAccount'])->name('admin.account.edit');
